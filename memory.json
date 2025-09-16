@@ -1,0 +1,146 @@
+{
+  "viewlogic_router_system": {
+    "core_philosophy": {
+      "view_logic_separation": "Complete separation between View (HTML) and Logic (JS). Views are pure templates, logic is pure components.",
+      "zero_build_development": "No build step required in development. Work directly with source files, see changes instantly."
+    },
+
+    "project_structure": {
+      "src/views/": "Pure HTML templates for each route (e.g., home.html, contact.html)",
+      "src/logic/": "Vue component logic files (e.g., home.js, contact.js) - exported as default objects",
+      "src/styles/": "Page-specific CSS files (e.g., home.css, contact.css)",
+      "src/layouts/": "Layout templates (e.g., default.html) with {{ content }} placeholder",
+      "src/components/": "Reusable Vue components (e.g., Button.js, Modal.js)",
+      "css/": "Global styles (base.css)",
+      "js/": "ViewLogic Router system files",
+      "i18n/": "Language files (ko.json, en.json)"
+    },
+
+    "route_creation_pattern": {
+      "step1_create_view": "Create src/views/{route-name}.html with pure HTML template",
+      "step2_create_logic": "Create src/logic/{route-name}.js with Vue component export default { }",
+      "step3_create_styles": "Create src/styles/{route-name}.css with page-specific styles",
+      "automatic_routing": "Routes are automatically registered based on file names in src/views/"
+    },
+
+    "view_template_structure": {
+      "root_element": "Single root div with class matching route name",
+      "vue_directives": "Use Vue directives: v-if, v-for, @click, v-model, {{ }} interpolation",
+      "component_usage": "Use built-in components: <Card>, <Button>, <Modal>, <Input>, etc.",
+      "navigation": "Use @click=\"navigateTo('route-name')\" for navigation"
+    },
+
+    "logic_component_structure": {
+      "export_format": "export default { name: 'ComponentName', ... }",
+      "required_properties": {
+        "name": "Component name (string)",
+        "data()": "Return object with reactive data",
+        "methods": "Component methods including navigation",
+        "mounted()": "Lifecycle hook for initialization"
+      },
+      "auto_available_methods": [
+        "navigateTo(route, params)",
+        "getParam(key, defaultValue)",
+        "getParams()",
+        "showToast(message, type)",
+        "$api.get/post/put/delete(url, data)",
+        "$isAuthenticated()",
+        "$t(key, params)"
+      ]
+    },
+
+    "built_in_components": {
+      "layout": ["Card", "Accordion", "Sidebar"],
+      "form": ["Button", "Input", "Checkbox", "Radio", "Select", "DatePicker", "FileUpload"],
+      "feedback": ["Alert", "Loading", "Modal", "Progress", "Toast", "Tooltip"],
+      "navigation": ["Breadcrumb", "Pagination", "Tabs"],
+      "data": ["Badge", "Table"],
+      "utility": ["DynamicInclude", "HtmlInclude", "LanguageSwitcher"]
+    },
+
+    "routing_system": {
+      "url_pattern": "Hash-based routing: /#route-name or /#route-name?param=value",
+      "query_parameters": "All parameters are query-based: /users?id=123 (not /users/:id)",
+      "navigation": "Use navigateTo('route-name', { param: 'value' }) in logic files",
+      "parameter_access": "Use getParam('param') or getParams() in mounted() or methods"
+    },
+
+    "api_integration": {
+      "automatic_data_fetching": {
+        "single_api": "dataURL: '/api/products' - auto-populates this.products",
+        "multiple_apis": "dataURL: { users: '/api/users', posts: '/api/posts' } - auto-populates this.users, this.posts"
+      },
+      "manual_api_calls": {
+        "get": "const data = await this.$api.get('/api/users/{userId}')",
+        "post": "await this.$api.post('/api/users', { name: 'John' })",
+        "parameter_substitution": "{userId} automatically replaced with this.userId or route param"
+      }
+    },
+
+    "form_handling": {
+      "automatic_forms": "Add action='/api/endpoint' method='POST' to forms - automatically handled",
+      "variable_parameters": "action='/api/users/{userId}/update' - {userId} auto-replaced",
+      "event_handlers": "data-success='handleSuccess' data-error='handleError' for custom handling",
+      "file_uploads": "Automatic FormData vs JSON detection based on input types"
+    },
+
+    "styling_approach": {
+      "css_classes": "Use existing CSS classes from base.css: .btn, .card, .container, etc.",
+      "component_specific": "Page-specific styles go in src/styles/{route-name}.css",
+      "responsive": "Mobile-first approach with existing responsive utilities"
+    },
+
+    "development_workflow": {
+      "development_mode": "ViewLogicRouter({ environment: 'development' }) - loads from src/",
+      "production_mode": "ViewLogicRouter({ environment: 'production' }) - loads from routes/",
+      "hot_reload": "Changes in src/ files are reflected immediately in development",
+      "no_build_required": "Direct file editing and instant preview"
+    },
+
+    "common_patterns": {
+      "page_with_data": {
+        "view": "HTML template with {{ data }} interpolation and v-for loops",
+        "logic": "dataURL for API, data() for local state, methods for actions",
+        "style": "Page-specific styling and responsive design"
+      },
+      "form_page": {
+        "view": "Form with action attribute and Vue directives",
+        "logic": "Form handlers and validation methods",
+        "navigation": "Post-success navigation with navigateTo()"
+      },
+      "dashboard_page": {
+        "view": "Card components with data display and charts",
+        "logic": "Multiple dataURL APIs, dashboard-specific methods",
+        "components": "Heavy use of built-in components like Card, Tabs, Progress"
+      }
+    },
+
+    "best_practices": {
+      "file_naming": "Use kebab-case for route names: user-profile.html, user-profile.js",
+      "component_usage": "Leverage built-in components instead of custom HTML",
+      "data_management": "Use dataURL for API data, data() for component state",
+      "navigation": "Always use navigateTo() instead of direct URL manipulation",
+      "error_handling": "Use try-catch with $api calls and toast notifications",
+      "responsive_design": "Mobile-first with existing CSS utility classes"
+    },
+
+    "example_new_route": {
+      "scenario": "Create a user profile page",
+      "files_to_create": [
+        "src/views/user-profile.html - HTML template with user data display",
+        "src/logic/user-profile.js - Component with dataURL: '/api/users/{userId}'",
+        "src/styles/user-profile.css - Profile-specific styling"
+      ],
+      "view_example": "<div class='user-profile'><Card :title='user.name'><p>{{ user.email }}</p></Card></div>",
+      "logic_example": "export default { name: 'UserProfile', dataURL: '/api/users/{userId}', mounted() { console.log(this.user); } }",
+      "navigation_example": "navigateTo('user-profile', { userId: 123 }) creates /#user-profile?userId=123"
+    },
+
+    "debugging_tips": {
+      "console_access": "Use console.log in logic files for debugging",
+      "vue_devtools": "Vue DevTools work with ViewLogic components",
+      "network_tab": "Check Network tab for API calls and file loading",
+      "route_parameters": "Use getParams() to inspect current route parameters"
+    }
+  }
+}
