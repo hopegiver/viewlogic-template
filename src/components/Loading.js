@@ -1,6 +1,6 @@
 /**
- * Loading 컴포넌트
- * 로딩 스피너
+ * Loading Component
+ * Loading spinner
  */
 export default {
     name: 'Loading',
@@ -39,7 +39,7 @@ export default {
                 </div>
                 
                 <button v-if="cancelable" class="loading-cancel" @click="handleCancel">
-                    취소
+                    Cancel
                 </button>
             </div>
         </div>

@@ -1,6 +1,6 @@
 /**
- * Radio 컴포넌트
- * 라디오 버튼
+ * Radio Component
+ * Radio button
  */
 export default {
     name: 'Radio',

@@ -1,6 +1,6 @@
 /**
- * Progress 컴포넌트
- * 진행률 표시
+ * Progress Component
+ * Progress indicator
  */
 export default {
     name: 'Progress',
@@ -24,7 +24,7 @@ export default {
                     </div>
                 </div>
                 
-                <!-- 다중 진행률 -->
+                <!-- Multiple progress -->
                 <div
                     v-if="multiple && steps.length > 0"
                     v-for="(step, index) in steps"
@@ -37,7 +37,7 @@ export default {
                 </div>
             </div>
             
-            <!-- 단계별 진행률 표시 -->
+            <!-- Step-by-step progress display -->
             <div v-if="showSteps && steps.length > 0" class="progress-steps">
                 <div
                     v-for="(step, index) in steps"

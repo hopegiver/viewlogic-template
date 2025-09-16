@@ -2,7 +2,7 @@ export default {
     name: 'DynamicInclude',
     template: `
         <div class="dynamic-include">
-            <div v-if="loading">로딩 중...</div>
+            <div v-if="loading">Loading...</div>
             <div v-else-if="error">{{ errorMessage }}</div>
             <component v-else :is="dynamicComponent" />
         </div>
@@ -43,23 +43,23 @@ export default {
         async loadPage() {
             if (!this.page) return;
             
-            // 중복 로딩 방지
+            // Prevent duplicate loading
             if (this.loading) return;
             
             this.loading = true;
             this.error = false;
             
             try {
-                // 라우터 상태 검사
+                // Check router status
                 if (!window.router) {
                     throw new Error('Router not initialized');
                 }
                 
-                // 라우터가 준비될 때까지 대기 (타임아웃 추가)
+                // Wait for router to be ready (with timeout)
                 if (!window.router?.routeLoader) {
                     await new Promise((resolve, reject) => {
                         let attempts = 0;
-                        const maxAttempts = 100; // 5초 타임아웃
+                        const maxAttempts = 100; // 5 second timeout
                         
                         const check = () => {
                             attempts++;
@@ -75,15 +75,15 @@ export default {
                     });
                 }
                 
-                // 페이지 이름 유효성 검사
+                // Validate page name
                 if (!this.page || typeof this.page !== 'string' || this.page.trim() === '') {
                     throw new Error('Invalid page name provided');
                 }
                 
-                // 컴포넌트 로드 (추가 예외 처리)
+                // Load component (with additional error handling)
                 const component = await window.router.routeLoader.createVueComponent(this.page.trim());
                 
-                // 개발 모드에서 스타일 적용
+                // Apply styles in development mode
                 if (component._style) {
                     this.applyStyle(component._style, `dynamic-${this.page}`);
                 }
@@ -92,12 +92,12 @@ export default {
                 console.log(`DynamicInclude: ${this.page} component loaded successfully`);
                 
             } catch (err) {
-                // 간단한 에러 로깅 (라우터 비중단)
+                // Simple error logging (non-breaking for router)
                 console.warn(`DynamicInclude: Failed to load '${this.page}':`, err.message);
                 
-                // 에러 상태 설정
+                // Set error state
                 this.error = true;
-                this.errorMessage = err.message || `'${this.page}' 페이지를 로드할 수 없습니다`;
+                this.errorMessage = err.message || `Cannot load page '${this.page}'`;
                 this.dynamicComponent = null;
             } finally {
                 this.loading = false;
@@ -106,7 +106,7 @@ export default {
         
         applyStyle(css, routeName) {
             try {
-                // 기존 스타일 제거
+                // Remove existing styles
                 const existing = document.querySelector(`style[data-route="${routeName}"]`);
                 if (existing) existing.remove();
 
@@ -119,7 +119,7 @@ export default {
                 }
             } catch (err) {
                 console.warn(`DynamicInclude: Failed to apply style for ${routeName}:`, err.message);
-                // 스타일 적용 실패는 컴포넌트 로드에 영향을 주지 않음
+                // Style application failure does not affect component loading
             }
         },
         

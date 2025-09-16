@@ -1,107 +1,595 @@
+/* Home Page Styles */
+
 .home-page {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding-top: 60px; /* Account for fixed nav */
 }
 
-.home-page h1 {
-    color: #333;
-    margin-bottom: 20px;
-    font-size: 2.5rem;
-    text-align: center;
-}
-
-.home-content {
-    padding: 20px;
-}
-
-.home-content > p {
-    font-size: 1.2rem;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #666;
-}
-
-.home-message {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
     color: white;
-    padding: 20px;
-    border-radius: 12px;
+    padding: 100px 0;
     text-align: center;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    position: relative;
+    overflow: hidden;
 }
 
-.home-message p {
-    margin: 0;
-    font-size: 1.1rem;
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" fill="rgba(255,255,255,0.1)"/></svg>') bottom center/cover no-repeat;
+    pointer-events: none;
 }
 
-.features {
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.features h3 {
-    color: #333;
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hero-subtitle {
+    font-size: 1.4rem;
+    font-weight: 500;
     margin-bottom: 15px;
+    opacity: 0.95;
+    line-height: 1.4;
 }
 
-.features ul {
-    list-style-type: none;
-    padding-left: 0;
+.hero-description {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+    opacity: 0.9;
+    line-height: 1.6;
 }
 
-.features li {
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
+.hero-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
 }
 
-.features li:before {
-    content: "✓ ";
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 5px;
+    color: #ffd700;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Section Styles */
+.philosophy-section,
+.features-section,
+.revolutionary-section,
+.performance-section,
+.getting-started-section {
+    padding: 80px 0;
+}
+
+.philosophy-section {
+    background: #f8f9fa;
+}
+
+.features-section {
+    background: white;
+}
+
+.revolutionary-section {
+    background: #f8f9fa;
+}
+
+.performance-section {
+    background: white;
+}
+
+.getting-started-section {
+    background: #f8f9fa;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.section-header p {
+    font-size: 1.2rem;
+    color: #6c757d;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Philosophy Grid */
+.philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.philosophy-card {
+    height: 100%;
+}
+
+.philosophy-content {
+    padding: 10px 0;
+}
+
+.philosophy-icon {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.philosophy-content p {
+    color: #6c757d;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.philosophy-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.philosophy-benefits li {
+    color: #495057;
+    margin-bottom: 8px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.philosophy-benefits li::before {
+    content: '✓';
     color: #28a745;
     font-weight: bold;
+    position: absolute;
+    left: 0;
 }
 
-.home-actions {
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.feature-item {
     text-align: center;
-    margin-top: 30px;
+    padding: 30px 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid #e9ecef;
 }
 
-.home-actions button {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin: 0 10px;
+.feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 123, 255, 0.15);
+    border-color: #007bff;
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.feature-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.feature-description {
+    color: #6c757d;
+    line-height: 1.6;
+}
+
+/* Revolutionary Section */
+.revolutionary-tabs {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.feature-showcase {
+    background: white;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.showcase-content h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.showcase-content h4 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 30px 0 15px 0;
+    color: #495057;
+}
+
+.showcase-content p {
+    color: #6c757d;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.code-example {
+    background: #2d3748;
+    color: #e2e8f0;
+    border-radius: 8px;
+    margin: 20px 0;
+    overflow-x: auto;
+}
+
+.code-example pre {
+    margin: 0;
+    padding: 20px;
+    font-family: 'Fira Code', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+.code-example code {
+    color: inherit;
+    background: none;
+    padding: 0;
+}
+
+/* Performance Section */
+.comparison-table {
+    overflow-x: auto;
+    margin-bottom: 60px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.comparison-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: 20px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.comparison-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+}
+
+.comparison-table .highlight-row {
+    background: linear-gradient(90deg, rgba(0, 123, 255, 0.05), rgba(0, 123, 255, 0.02));
+    border-left: 4px solid #007bff;
+}
+
+.comparison-table .highlight-row td {
+    color: #0056b3;
+}
+
+.performance-benefits {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.benefit-item {
+    text-align: center;
+}
+
+.benefit-percentage {
+    display: block;
+    font-size: 3rem;
+    font-weight: 800;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.benefit-label {
     font-size: 1rem;
-    transition: background 0.3s;
+    color: #6c757d;
+    font-weight: 500;
 }
 
-.home-actions button:hover {
-    background: #0056b3;
+/* Getting Started Section */
+.getting-started-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 40px;
+    margin-bottom: 60px;
 }
 
+.quick-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* Demo Modal */
+.demo-content h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.demo-content p {
+    color: #6c757d;
+    margin-bottom: 30px;
+}
+
+.demo-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.demo-item {
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.demo-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.feature-item,
+.philosophy-card {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.feature-item:nth-child(even),
+.philosophy-card:nth-child(even) {
+    animation-delay: 0.1s;
+}
+
+.feature-item:nth-child(3n),
+.philosophy-card:nth-child(3n) {
+    animation-delay: 0.2s;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
     .home-page {
-        padding: 15px;
-        margin: 10px;
+        padding-top: 60px;
     }
-    
-    .home-page h1 {
+
+    .hero-section {
+        padding: 60px 0;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .hero-actions .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .hero-stats {
+        gap: 30px;
+    }
+
+    .stat-number {
         font-size: 2rem;
     }
-    
-    .home-actions button {
-        display: block;
-        width: 100%;
-        margin: 10px 0;
+
+    .section-header h2 {
+        font-size: 2rem;
     }
+
+    .section-header p {
+        font-size: 1.1rem;
+    }
+
+    .philosophy-grid,
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .philosophy-section,
+    .features-section,
+    .revolutionary-section,
+    .performance-section,
+    .getting-started-section {
+        padding: 60px 0;
+    }
+
+    .feature-showcase {
+        padding: 30px 20px;
+    }
+
+    .showcase-content h3 {
+        font-size: 1.5rem;
+    }
+
+    .showcase-content h4 {
+        font-size: 1.2rem;
+    }
+
+    .code-example pre {
+        padding: 15px;
+        font-size: 13px;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: 15px 10px;
+        font-size: 14px;
+    }
+
+    .performance-benefits {
+        gap: 40px;
+    }
+
+    .benefit-percentage {
+        font-size: 2.5rem;
+    }
+
+    .getting-started-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .quick-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .quick-actions .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .demo-buttons {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .hero-stats {
+        gap: 20px;
+    }
+
+    .stat-number {
+        font-size: 1.8rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.8rem;
+    }
+
+    .feature-item {
+        padding: 20px 15px;
+    }
+
+    .feature-icon {
+        font-size: 2.5rem;
+    }
+
+    .feature-title {
+        font-size: 1.2rem;
+    }
+
+    .philosophy-icon {
+        font-size: 2.5rem;
+    }
+
+    .code-example pre {
+        padding: 12px;
+        font-size: 12px;
+    }
+}
+
+/* Custom scrollbar for code examples */
+.code-example::-webkit-scrollbar {
+    height: 8px;
+}
+
+.code-example::-webkit-scrollbar-track {
+    background: #4a5568;
+}
+
+.code-example::-webkit-scrollbar-thumb {
+    background: #718096;
+    border-radius: 4px;
+}
+
+.code-example::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0;
 }

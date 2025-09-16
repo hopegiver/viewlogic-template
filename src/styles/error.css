@@ -153,7 +153,7 @@
     color: #0056b3;
 }
 
-/* 반응형 디자인 */
+/* Responsive Design */
 @media (max-width: 768px) {
     .error-container {
         padding: 1rem;

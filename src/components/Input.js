@@ -1,6 +1,6 @@
 /**
- * Input 컴포넌트
- * 다양한 타입의 입력 필드를 제공하는 컴포넌트
+ * Input Component
+ * Provides various types of input fields
  */
 export default {
     name: 'Input',

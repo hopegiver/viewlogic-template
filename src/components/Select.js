@@ -1,6 +1,6 @@
 /**
- * Select/Dropdown 컴포넌트
- * 선택 드롭다운
+ * Select/Dropdown Component
+ * Selection dropdown
  */
 export default {
     name: 'Select',
@@ -29,7 +29,7 @@ export default {
                 </div>
             </div>
             
-            <!-- 드롭다운 옵션 -->
+            <!-- Dropdown options -->
             <transition name="select-dropdown">
                 <div v-if="isOpen" class="select-dropdown" :class="dropdownClasses">
                     <div v-if="searchable" class="select-search">
@@ -88,7 +88,7 @@ export default {
         },
         placeholder: {
             type: String,
-            default: '선택하세요'
+            default: 'Please select'
         },
         labelKey: {
             type: String,
@@ -116,7 +116,7 @@ export default {
         },
         searchPlaceholder: {
             type: String,
-            default: '검색...'
+            default: 'Search...'
         },
         multiple: {
             type: Boolean,
@@ -137,7 +137,7 @@ export default {
         },
         noOptionsText: {
             type: String,
-            default: '옵션이 없습니다'
+            default: 'No options available'
         },
         maxHeight: {
             type: String,

@@ -1,6 +1,6 @@
 /**
- * Card 컴포넌트
- * 콘텐츠를 카드 형태로 표시하는 컴포넌트
+ * Card Component
+ * Component for displaying content in card format
  */
 export default {
     name: 'Card',
@@ -17,7 +17,7 @@ export default {
                 </div>
                 <div v-if="$slots.actions || showDefaultActions" class="card-actions">
                     <slot name="actions">
-                        <button v-if="showDefaultActions" class="btn btn-sm btn-outline">더보기</button>
+                        <button v-if="showDefaultActions" class="btn btn-sm btn-outline">More</button>
                     </slot>
                 </div>
             </div>

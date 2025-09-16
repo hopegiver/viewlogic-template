@@ -1,82 +1,120 @@
 export default {
     name: 'Home',
-    
+
     data() {
         return {
-            message: 'ViewLogic 홈페이지',
-            showModal: false,
-            modalInput: '',
-            activeTab: 'demo1',
+            heroTitle: 'ViewLogic Router',
+            heroSubtitle: 'A revolutionary Vue 3 routing system with View-Logic separation and Zero Build Development',
+            heroDescription: 'Complete routing solution in just 13KB gzipped with built-in components, authentication, and revolutionary features.',
+
+            activeTab: 'dataurl',
+            showDemoModal: false,
             demoInput: '',
-            tabsData: [
-                { name: 'demo1', label: '컴포넌트 데모' },
-                { name: 'demo2', label: '기능 목록' }
+
+            philosophies: [
+                {
+                    title: 'View-Logic Separation',
+                    subtitle: 'Clean Architecture',
+                    icon: '🎭',
+                    description: 'Complete separation between View (presentation) and Logic (business logic). Views are pure HTML templates, logic is pure JavaScript components.',
+                    benefits: [
+                        'Pure HTML templates without mixed logic',
+                        'Focused JavaScript components',
+                        'Better maintainability and testability',
+                        'Scalable code organization'
+                    ]
+                },
+                {
+                    title: 'Zero Build Development',
+                    subtitle: 'Instant Development',
+                    icon: '🚀',
+                    description: 'Zero build step required in development mode. Work directly with source files, see changes instantly without compilation or bundling.',
+                    benefits: [
+                        'Instant changes without compilation',
+                        'True real-time development',
+                        'No webpack, vite, or build tools needed',
+                        'Focus on code, not build configuration'
+                    ]
+                }
             ],
-            features: [
-                '🚀 빌드 없이 즉시 개발',
-                '📁 파일 기반 자동 라우팅', 
-                '🎨 20+ 내장 컴포넌트',
-                '🔐 인증 시스템 내장',
-                '🌐 다국어 지원'
-            ],
-            componentFeatures: [
+
+            keyFeatures: [
                 {
-                    name: '컴포넌트 시스템',
-                    description: 'Vue 3 호환 컴포넌트 라이브러리',
-                    status: '활성화'
+                    icon: '🪶',
+                    title: 'Ultra-Lightweight',
+                    description: 'Complete routing system in just 13KB gzipped (48KB minified) with everything included'
                 },
                 {
-                    name: '라우팅 시스템',
-                    description: '파일 기반 자동 라우팅',
-                    status: '정상'
+                    icon: '🔄',
+                    title: 'Multiple API Support',
+                    description: 'Parallel data fetching from multiple APIs with named data storage using dataURL'
                 },
                 {
-                    name: '캐시 시스템',
-                    description: '인메모리 기반 성능 최적화',
-                    status: '정상'
+                    icon: '📝',
+                    title: 'Automatic Form Handling',
+                    description: 'Revolutionary form submission with {paramName} variable parameters and auto-binding'
                 },
                 {
-                    name: '다국어 지원',
-                    description: 'i18n 기반 다국어 시스템',
-                    status: '비활성화'
+                    icon: '🛠️',
+                    title: 'Built-in Components',
+                    description: 'Preloaded UI components including revolutionary DynamicInclude & HtmlInclude'
+                },
+                {
+                    icon: '🔗',
+                    title: 'Query-Based Parameters',
+                    description: 'Simple query-only parameters (/users?id=123) instead of complex path parameters'
+                },
+                {
+                    icon: '⚡',
+                    title: 'Optimized Production',
+                    description: 'Pre-built individual route bundles for lightning-fast production performance'
+                },
+                {
+                    icon: '📁',
+                    title: 'Intuitive Structure',
+                    description: 'Organized folder structure for views, logic, styles, layouts, and components'
+                },
+                {
+                    icon: '💾',
+                    title: 'Smart Caching',
+                    description: 'Intelligent route and component caching with configurable TTL and size limits'
+                },
+                {
+                    icon: '🔐',
+                    title: 'Authentication',
+                    description: 'Built-in auth management system with protected routes and token handling'
+                },
+                {
+                    icon: '🌐',
+                    title: 'i18n Ready',
+                    description: 'Built-in internationalization support with automatic language detection'
                 }
             ]
         };
     },
-    
+
     methods: {
-        showToast(message = '알림 테스트가 성공적으로 실행되었습니다!', type = 'success') {
+        showDemo() {
+            this.showDemoModal = true;
+        },
+
+        showToast(message, type = 'info') {
             if (this.$refs.toast) {
-                this.$refs.toast[type](message);
+                this.$refs.toast.show(message, type);
             }
         },
-        
-        handleModalConfirm() {
-            this.showToast(`입력된 내용: ${this.modalInput || '비어있음'}`, 'success');
-            this.showModal = false;
-            this.modalInput = '';
+
+        navigateToComponents() {
+            this.navigateTo('components');
         },
-        
-        handleModalCancel() {
-            this.modalInput = '';
-            this.showModal = false;
-        },
-        
-        clearRouterCache() {
-            if (window.router && window.router.cacheManager) {
-                const clearedCount = window.router.cacheManager.clearCache();
-                this.showToast(`캐시 ${clearedCount}개 항목이 초기화되었습니다`, 'info');
-            } else {
-                this.showToast('캐시 매니저를 찾을 수 없습니다', 'warning');
-            }
-        },
-        
-        onLanguageChanged(language) {
-            this.showToast(`언어가 ${language}로 변경되었습니다`, 'info');
-        },
-        
-        goToPage(page) {
-            this.navigateTo(page);
+
+        navigateToContact() {
+            this.navigateTo('contact');
         }
+    },
+
+    mounted() {
+        // Initialize any animations or dynamic content
+        console.log('ViewLogic Router Home page loaded');
     }
 };

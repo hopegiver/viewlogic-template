@@ -1,6 +1,6 @@
 /**
- * Tabs 컴포넌트
- * 탭 형태의 네비게이션을 제공하는 컴포넌트
+ * Tabs Component
+ * Component providing tab-style navigation
  */
 export default {
     name: 'Tabs',
@@ -131,7 +131,7 @@ export default {
             this.$emit('update:modelValue', tab.name);
             this.$emit('tab-change', { tab, index, previousTab: this.activeTab });
             
-            // lazy 로딩 탭 추적
+            // Track lazy loading tabs
             if (this.lazy) {
                 this.loadedTabs.add(tab.name);
             }
@@ -141,7 +141,7 @@ export default {
             
             this.$emit('tab-close', { tab, index });
             
-            // 현재 활성 탭이 닫히는 경우 다른 탭으로 이동
+            // Move to another tab if current active tab is closed
             if (this.activeTab === tab.name) {
                 const remainingTabs = this.tabs.filter((_, i) => i !== index);
                 if (remainingTabs.length > 0) {
@@ -192,7 +192,7 @@ export default {
         },
         tabs: {
             handler(newTabs) {
-                // 활성 탭이 더 이상 존재하지 않는 경우 첫 번째 탭으로 이동
+                // Move to first tab if active tab no longer exists
                 if (!newTabs.find(tab => tab.name === this.activeTab) && newTabs.length > 0) {
                     this.selectTab(newTabs[0], 0);
                 }
@@ -201,7 +201,7 @@ export default {
         }
     },
     mounted() {
-        // 초기 활성 탭을 lazy 로딩 목록에 추가
+        // Add initial active tab to lazy loading list
         if (this.lazy && this.activeTab) {
             this.loadedTabs.add(this.activeTab);
         }

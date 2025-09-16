@@ -12,7 +12,7 @@
     width: 100%;
 }
 
-/* 404 일러스트레이션 */
+/* 404 Illustration */
 .not-found-illustration {
     margin-bottom: 2rem;
 }
@@ -90,7 +90,7 @@
     }
 }
 
-/* 텍스트 섹션 */
+/* Text Section */
 .not-found-text h1 {
     font-size: 2.5rem;
     color: #333;
@@ -113,7 +113,7 @@
     font-family: 'Courier New', monospace;
 }
 
-/* 검색 섹션 */
+/* Search Section */
 .search-section {
     margin: 2rem 0;
 }
@@ -154,7 +154,7 @@
     background-color: #0056b3;
 }
 
-/* 제안 페이지 섹션 */
+/* Suggested Pages Section */
 .suggestions-section {
     margin: 3rem 0;
 }
@@ -217,7 +217,7 @@
     transform: translateX(4px);
 }
 
-/* 액션 버튼들 */
+/* Action Buttons */
 .action-buttons {
     display: flex;
     flex-wrap: wrap;
@@ -271,7 +271,7 @@
     transform: translateY(-2px);
 }
 
-/* 도움말 섹션 */
+/* Help Section */
 .help-section {
     margin-top: 3rem;
     padding-top: 2rem;
@@ -316,7 +316,7 @@
     line-height: 1.4;
 }
 
-/* 반응형 디자인 */
+/* Responsive Design */
 @media (max-width: 768px) {
     .not-found-container {
         padding: 1rem;

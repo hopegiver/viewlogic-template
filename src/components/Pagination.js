@@ -1,6 +1,6 @@
 /**
- * Pagination 컴포넌트
- * 페이지네이션
+ * Pagination Component
+ * Page navigation
  */
 export default {
     name: 'Pagination',
@@ -13,36 +13,36 @@ export default {
             </div>
             
             <ul class="pagination" :class="paginationClasses">
-                <!-- 첫 페이지 -->
+                <!-- First page -->
                 <li v-if="showFirstLast" class="pagination-item">
                     <button
                         class="pagination-link"
                         :disabled="currentPage === 1"
                         @click="goToPage(1)"
-                        :aria-label="'첫 페이지로 이동'"
+                        :aria-label="'Go to first page'"
                     >
                         ««
                     </button>
                 </li>
                 
-                <!-- 이전 페이지 -->
+                <!-- Previous page -->
                 <li class="pagination-item">
                     <button
                         class="pagination-link"
                         :disabled="currentPage === 1"
                         @click="goToPage(currentPage - 1)"
-                        :aria-label="'이전 페이지로 이동'"
+                        :aria-label="'Go to previous page'"
                     >
                         ‹
                     </button>
                 </li>
                 
-                <!-- 시작 생략 -->
+                <!-- Start ellipsis -->
                 <li v-if="showStartEllipsis" class="pagination-item pagination-ellipsis">
                     <span class="pagination-link">…</span>
                 </li>
                 
-                <!-- 페이지 번호들 -->
+                <!-- Page numbers -->
                 <li
                     v-for="page in visiblePages"
                     :key="page"
@@ -52,47 +52,47 @@ export default {
                     <button
                         class="pagination-link"
                         @click="goToPage(page)"
-                        :aria-label="'페이지 ' + page + '로 이동'"
+                        :aria-label="'Go to page ' + page"
                         :aria-current="page === currentPage ? 'page' : null"
                     >
                         {{ page }}
                     </button>
                 </li>
                 
-                <!-- 끝 생략 -->
+                <!-- End ellipsis -->
                 <li v-if="showEndEllipsis" class="pagination-item pagination-ellipsis">
                     <span class="pagination-link">…</span>
                 </li>
                 
-                <!-- 다음 페이지 -->
+                <!-- Next page -->
                 <li class="pagination-item">
                     <button
                         class="pagination-link"
                         :disabled="currentPage === totalPages"
                         @click="goToPage(currentPage + 1)"
-                        :aria-label="'다음 페이지로 이동'"
+                        :aria-label="'Go to next page'"
                     >
                         ›
                     </button>
                 </li>
                 
-                <!-- 마지막 페이지 -->
+                <!-- Last page -->
                 <li v-if="showFirstLast" class="pagination-item">
                     <button
                         class="pagination-link"
                         :disabled="currentPage === totalPages"
                         @click="goToPage(totalPages)"
-                        :aria-label="'마지막 페이지로 이동'"
+                        :aria-label="'Go to last page'"
                     >
                         »»
                     </button>
                 </li>
             </ul>
             
-            <!-- 페이지 크기 선택 -->
+            <!-- Page size selection -->
             <div v-if="showPageSize" class="pagination-page-size">
                 <label class="pagination-page-size-label">
-                    페이지당 항목 수:
+                    Items per page:
                     <select v-model="localPageSize" @change="handlePageSizeChange" class="pagination-page-size-select">
                         <option v-for="size in pageSizeOptions" :key="size" :value="size">
                             {{ size }}
@@ -204,7 +204,7 @@ export default {
         infoText() {
             const start = (this.currentPage - 1) * this.localPageSize + 1;
             const end = Math.min(start + this.localPageSize - 1, this.totalItems);
-            return `${start}-${end} / 총 ${this.totalItems}개`;
+            return `${start}-${end} / Total ${this.totalItems} items`;
         }
     },
     methods: {

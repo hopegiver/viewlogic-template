@@ -1,6 +1,6 @@
 /**
- * Accordion 컴포넌트
- * 아코디언
+ * Accordion Component
+ * Collapsible content sections
  */
 export default {
     name: 'Accordion',

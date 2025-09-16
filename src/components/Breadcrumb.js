@@ -1,11 +1,11 @@
 /**
- * Breadcrumb 컴포넌트
- * 경로 표시
+ * Breadcrumb Component
+ * Navigation path display
  */
 export default {
     name: 'Breadcrumb',
     template: `
-        <nav class="breadcrumb-wrapper" :class="wrapperClasses" aria-label="경로">
+        <nav class="breadcrumb-wrapper" :class="wrapperClasses" aria-label="Navigation">
             <ol class="breadcrumb" :class="breadcrumbClasses">
                 <li
                     v-for="(item, index) in items"
@@ -104,7 +104,7 @@ export default {
         processedItems() {
             let result = [...this.items];
             
-            // 홈 아이콘 추가
+            // Add home icon
             if (this.showHome && result.length > 0 && !result[0].isHome) {
                 result.unshift({
                     label: this.homeIcon,
@@ -114,7 +114,7 @@ export default {
                 });
             }
             
-            // 최대 항목 수 제한
+            // Limit maximum number of items
             if (this.maxItems && result.length > this.maxItems) {
                 const start = result.slice(0, 1);
                 const end = result.slice(-this.maxItems + 2);

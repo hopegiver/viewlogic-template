@@ -12,8 +12,8 @@
                 :disabled="isRetrying"
                 class="btn btn-primary"
             >
-                <span v-if="isRetrying">재시도 중...</span>
-                <span v-else>🔄 다시 시도</span>
+                <span v-if="isRetrying">Retrying...</span>
+                <span v-else>🔄 Try Again</span>
             </button>
             
             <button 
@@ -21,26 +21,26 @@
                 @click="goHome" 
                 class="btn btn-secondary"
             >
-                🏠 홈으로 가기
+                🏠 Go Home
             </button>
             
             <button @click="goBack" class="btn btn-outline">
-                ← 뒤로 가기
+                ← Go Back
             </button>
         </div>
         
         <div class="error-help">
             <details class="error-details">
-                <summary>기술적 세부사항</summary>
+                <summary>Technical Details</summary>
                 <div class="error-tech-info">
-                    <p><strong>오류 코드:</strong> {{ errorCode }}</p>
-                    <p><strong>시간:</strong> {{ new Date().toLocaleString() }}</p>
+                    <p><strong>Error Code:</strong> {{ errorCode }}</p>
+                    <p><strong>Time:</strong> {{ new Date().toLocaleString() }}</p>
                     <p><strong>URL:</strong> {{ window.location.href }}</p>
                 </div>
             </details>
             
             <button @click="reportError" class="btn btn-link">
-                📧 문제 신고하기
+                📧 Report Issue
             </button>
         </div>
     </div>

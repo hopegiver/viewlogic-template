@@ -1,6 +1,6 @@
 /**
- * Button 컴포넌트
- * 재사용 가능한 버튼 UI 컴포넌트
+ * Button Component
+ * Reusable button UI component
  */
 export default {
     name: 'Button',

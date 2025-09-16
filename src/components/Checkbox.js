@@ -1,6 +1,6 @@
 /**
- * Checkbox 컴포넌트
- * 체크박스 입력
+ * Checkbox Component
+ * Checkbox input element
  */
 export default {
     name: 'Checkbox',

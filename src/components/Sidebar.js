@@ -1,17 +1,17 @@
 /**
- * Sidebar 컴포넌트
- * 사이드바
+ * Sidebar Component
+ * Sidebar panel
  */
 export default {
     name: 'Sidebar',
     template: `
         <aside :class="sidebarClasses" :style="sidebarStyle">
-            <!-- 오버레이 -->
+            <!-- Overlay -->
             <div v-if="overlay && isOpen" class="sidebar-overlay" @click="close"></div>
             
-            <!-- 사이드바 콘텐츠 -->
+            <!-- Sidebar content -->
             <div class="sidebar-content">
-                <!-- 헤더 -->
+                <!-- Header -->
                 <div v-if="$slots.header || title" class="sidebar-header">
                     <slot name="header">
                         <h3 v-if="title" class="sidebar-title">{{ title }}</h3>
@@ -21,7 +21,7 @@ export default {
                     </button>
                 </div>
                 
-                <!-- 메인 콘텐츠 -->
+                <!-- Main content -->
                 <div class="sidebar-body">
                     <nav v-if="navigation && menuItems.length > 0" class="sidebar-nav">
                         <ul class="sidebar-menu">
@@ -85,13 +85,13 @@ export default {
                     </div>
                 </div>
                 
-                <!-- 푸터 -->
+                <!-- Footer -->
                 <div v-if="$slots.footer" class="sidebar-footer">
                     <slot name="footer"></slot>
                 </div>
             </div>
             
-            <!-- 리사이즈 핸들 -->
+            <!-- Resize handle -->
             <div v-if="resizable" class="sidebar-resize-handle" @mousedown="startResize"></div>
         </aside>
     `,

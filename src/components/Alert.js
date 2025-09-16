@@ -1,6 +1,6 @@
 /**
- * Alert 컴포넌트
- * 알림 박스
+ * Alert Component
+ * Notification box
  */
 export default {
     name: 'Alert',
@@ -11,7 +11,7 @@ export default {
                     <span v-if="icon" :class="['alert-icon', iconClass]">
                         {{ iconText }}
                     </span>
-                    <button v-if="closable" class="alert-close" @click="close" aria-label="닫기">
+                    <button v-if="closable" class="alert-close" @click="close" aria-label="Close">
                         ×
                     </button>
                 </div>

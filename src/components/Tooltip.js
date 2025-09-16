@@ -1,6 +1,6 @@
 /**
- * Tooltip 컴포넌트
- * 툴팁
+ * Tooltip Component
+ * Tooltip display
  */
 export default {
     name: 'Tooltip',
@@ -198,7 +198,7 @@ export default {
             let left = 0;
             let placement = this.placement;
             
-            // 기본 위치 계산
+            // Calculate default position
             switch (placement.split('-')[0]) {
                 case 'top':
                     top = triggerRect.top - tooltipRect.height - offsetY;
@@ -218,7 +218,7 @@ export default {
                     break;
             }
             
-            // start/end 정렬 조정
+            // Adjust start/end alignment
             if (placement.includes('-start')) {
                 if (['top', 'bottom'].includes(placement.split('-')[0])) {
                     left = triggerRect.left;
@@ -233,13 +233,13 @@ export default {
                 }
             }
             
-            // 화면 경계 감지 및 자동 조정
+            // Detect screen boundaries and auto adjust
             const viewport = {
                 width: window.innerWidth,
                 height: window.innerHeight
             };
             
-            // 화면을 벗어나는 경우 위치 조정
+            // Adjust position if going off screen
             if (left < 0) {
                 left = 8;
             } else if (left + tooltipRect.width > viewport.width) {

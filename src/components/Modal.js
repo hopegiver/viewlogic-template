@@ -1,6 +1,6 @@
 /**
- * Modal 컴포넌트
- * 다양한 용도로 사용할 수 있는 모달 다이얼로그
+ * Modal Component
+ * Versatile modal dialog for various use cases
  */
 export default {
     name: 'Modal',
@@ -19,7 +19,7 @@ export default {
                             v-if="showCloseButton" 
                             class="modal-close" 
                             @click="closeModal"
-                            aria-label="닫기"
+                            aria-label="Close"
                         >
                             ×
                         </button>
@@ -97,11 +97,11 @@ export default {
         },
         cancelText: {
             type: String,
-            default: '취소'
+            default: 'Cancel'
         },
         confirmText: {
             type: String,
-            default: '확인'
+            default: 'Confirm'
         },
         confirmDisabled: {
             type: Boolean,
@@ -134,7 +134,7 @@ export default {
         }
     },
     mounted() {
-        // ESC 키로 모달 닫기
+        // Close modal with ESC key
         const handleEscape = (event) => {
             if (event.key === 'Escape' && this.modelValue && this.closable) {
                 this.closeModal();

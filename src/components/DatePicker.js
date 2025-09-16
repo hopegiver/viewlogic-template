@@ -1,6 +1,6 @@
 /**
- * DatePicker 컴포넌트
- * 날짜 선택기
+ * DatePicker Component
+ * Date picker widget
  */
 export default {
     name: 'DatePicker',
@@ -28,7 +28,7 @@ export default {
             
             <transition name="datepicker-dropdown">
                 <div v-if="isOpen" class="datepicker-dropdown" :class="dropdownClasses">
-                    <!-- 헤더 -->
+                    <!-- Header -->
                     <div class="datepicker-header">
                         <button class="datepicker-nav" @click="previousMonth">‹</button>
                         <div class="datepicker-title">
@@ -46,14 +46,14 @@ export default {
                         <button class="datepicker-nav" @click="nextMonth">›</button>
                     </div>
                     
-                    <!-- 요일 -->
+                    <!-- Weekdays -->
                     <div class="datepicker-weekdays">
                         <div v-for="day in weekDays" :key="day" class="datepicker-weekday">
                             {{ day }}
                         </div>
                     </div>
                     
-                    <!-- 날짜 -->
+                    <!-- Dates -->
                     <div class="datepicker-calendar">
                         <div
                             v-for="date in calendarDates"
@@ -66,13 +66,13 @@ export default {
                         </div>
                     </div>
                     
-                    <!-- 하단 버튼 -->
+                    <!-- Footer buttons -->
                     <div v-if="showFooter" class="datepicker-footer">
                         <button class="datepicker-today-btn" @click="selectToday">
-                            오늘
+                            Today
                         </button>
                         <button class="datepicker-clear-btn" @click="clear">
-                            취소
+                            Cancel
                         </button>
                     </div>
                 </div>
@@ -96,7 +96,7 @@ export default {
         },
         placeholder: {
             type: String,
-            default: '날짜를 선택하세요'
+            default: 'Select a date'
         },
         format: {
             type: String,
@@ -155,10 +155,10 @@ export default {
             currentDate: new Date(),
             inputId: `datepicker-${Math.random().toString(36).substr(2, 9)}`,
             monthNames: [
-                '1월', '2월', '3월', '4월', '5월', '6월',
-                '7월', '8월', '9월', '10월', '11월', '12월'
+                'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
             ],
-            weekDays: ['일', '월', '화', '수', '목', '금', '토']
+            weekDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
         };
     },
     computed: {
@@ -326,7 +326,7 @@ export default {
     mounted() {
         document.addEventListener('click', this.handleClickOutside);
         
-        // 초기 날짜 설정
+        // Set initial date
         if (this.selectedDate) {
             this.currentDate = new Date(this.selectedDate);
         }

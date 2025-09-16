@@ -8,7 +8,7 @@ export default {
         },
         errorMessage: {
             type: String,
-            default: '오류가 발생했습니다.'
+            default: 'An error occurred.'
         },
         showRetry: {
             type: Boolean,
@@ -27,21 +27,21 @@ export default {
     computed: {
         errorTitle() {
             const errorTitles = {
-                404: '페이지를 찾을 수 없습니다',
-                500: '서버 오류가 발생했습니다',
-                403: '접근이 거부되었습니다',
-                401: '인증이 필요합니다',
-                400: '잘못된 요청입니다'
+                404: 'Page not found',
+                500: 'Server error occurred',
+                403: 'Access denied',
+                401: 'Authentication required',
+                400: 'Bad request'
             };
-            return errorTitles[this.errorCode] || '알 수 없는 오류';
+            return errorTitles[this.errorCode] || 'Unknown error';
         },
         errorDescription() {
             const descriptions = {
-                404: '요청하신 페이지를 찾을 수 없습니다. URL을 확인해 주세요.',
-                500: '서버에 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.',
-                403: '이 페이지에 접근할 권한이 없습니다.',
-                401: '로그인이 필요한 페이지입니다.',
-                400: '요청이 올바르지 않습니다.'
+                404: 'The requested page could not be found. Please check the URL.',
+                500: 'A server problem occurred. Please try again later.',
+                403: 'You do not have permission to access this page.',
+                401: 'This page requires login.',
+                400: 'The request is not valid.'
             };
             return descriptions[this.errorCode] || this.errorMessage;
         },
@@ -60,11 +60,11 @@ export default {
         async handleRetry() {
             this.isRetrying = true;
             try {
-                // 현재 페이지 다시 로드 시도
+                // Try to reload current page
                 await new Promise(resolve => setTimeout(resolve, 1000));
                 window.location.reload();
             } catch (error) {
-                console.error('재시도 실패:', error);
+                console.error('Retry failed:', error);
             } finally {
                 this.isRetrying = false;
             }
@@ -80,14 +80,14 @@ export default {
             window.history.back();
         },
         reportError() {
-            // 에러 리포팅 로직 (추후 구현 가능)
-            console.log('에러 신고:', {
+            // Error reporting logic (can be implemented later)
+            console.log('Error report:', {
                 code: this.errorCode,
                 message: this.errorMessage,
                 url: window.location.href,
                 timestamp: new Date().toISOString()
             });
-            alert('에러가 신고되었습니다. 빠른 시일 내에 수정하겠습니다.');
+            alert('Error has been reported. We will fix it as soon as possible.');
         }
     }
 }

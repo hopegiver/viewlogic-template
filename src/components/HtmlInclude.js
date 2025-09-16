@@ -11,7 +11,7 @@ export default {
     props: {
         src: { type: String, required: true },
         sanitize: { type: Boolean, default: true },
-        loadingText: { type: String, default: '로딩 중...' },
+        loadingText: { type: String, default: 'Loading...' },
         wrapperClass: { type: String, default: 'html-include' }
     },
     
@@ -37,7 +37,7 @@ export default {
                 return;
             }
             
-            if (this.loading) return; // 중복 로딩 방지
+            if (this.loading) return; // Prevent duplicate loading
             
             try {
                 this.loading = true;
@@ -52,7 +52,7 @@ export default {
                 
                 let content = await response.text();
                 
-                // 기본 스크립트 살균화
+                // Basic script sanitization
                 if (this.sanitize) {
                     content = this.sanitizeHtml(content);
                 }
@@ -69,22 +69,22 @@ export default {
         handleError(error) {
             console.warn(`HtmlInclude: Failed to load '${this.src}':`, error.message);
             this.error = true;
-            this.errorMessage = error.message || `'${this.src}' 파일을 로드할 수 없습니다`;
+            this.errorMessage = error.message || `Cannot load file '${this.src}'`;
             this.content = '';
         },
         
         resolvePath(path) {
-            // 절대 URL인 경우 그대로 반환
+            // Return absolute URLs as-is
             if (path.startsWith('http') || path.startsWith('//')) {
                 return path;
             }
             
-            // 라우터의 resolvePath 사용 가능한 경우
+            // Use router's resolvePath if available
             if (window.router && typeof window.router.resolvePath === 'function') {
                 return window.router.resolvePath(path);
             }
             
-            // 폴백: 기본 URL 해결
+            // Fallback: basic URL resolution
             if (path.startsWith('/')) {
                 return `${window.location.origin}${path}`;
             }
@@ -93,10 +93,10 @@ export default {
         },
         
         sanitizeHtml(html) {
-            // 기본적인 HTML 살균화 (스크립트 태그 제거)
+            // Basic HTML sanitization (remove script tags)
             return html.replace(/<script[^>]*>.*?<\/script>/gis, '')
                       .replace(/<script[^>]*\/>/gi, '')
-                      .replace(/on\w+\s*=/gi, ''); // 인라인 이벤트 핸들러 제거
+                      .replace(/on\w+\s*=/gi, ''); // Remove inline event handlers
         }
     }
 };

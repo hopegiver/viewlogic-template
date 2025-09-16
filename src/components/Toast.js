@@ -1,6 +1,6 @@
 /**
- * Toast 컴포넌트
- * 알림 메시지를 표시하는 컴포넌트
+ * Toast Component
+ * Component for displaying notification messages
  */
 export default {
     name: 'Toast',
@@ -72,14 +72,14 @@ export default {
                 ...options
             };
             
-            // 최대 토스트 개수 제한
+            // Limit maximum number of toasts
             if (this.toasts.length >= this.maxToasts) {
                 this.toasts.shift();
             }
             
             this.toasts.push(toast);
             
-            // 자동 닫기
+            // Auto close
             if (toast.duration > 0) {
                 setTimeout(() => {
                     this.closeToast(toast.id);
@@ -118,7 +118,7 @@ export default {
             };
             return icons[type] || icons.info;
         },
-        // 편의 메서드들
+        // Convenience methods
         success(message, options = {}) {
             return this.show({ ...options, type: 'success', message });
         },

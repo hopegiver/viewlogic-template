@@ -1,12 +1,12 @@
 /**
- * Table 컴포넌트
- * 데이터 테이블 (정렬, 페이지네이션, 필터링)
+ * Table Component
+ * Data table (sorting, pagination, filtering)
  */
 export default {
     name: 'Table',
     template: `
         <div class="table-wrapper">
-            <!-- 검색 및 필터 -->
+            <!-- Search and filters -->
             <div v-if="searchable || filterable" class="table-header">
                 <div v-if="searchable" class="table-search">
                     <input
@@ -35,7 +35,7 @@ export default {
                 </div>
             </div>
 
-            <!-- 테이블 -->
+            <!-- Table -->
             <div class="table-container" :class="tableClasses">
                 <table class="table" :class="{ 'table-loading': loading }">
                     <thead>
@@ -90,12 +90,12 @@ export default {
                 </table>
             </div>
 
-            <!-- 로딩 상태 -->
+            <!-- Loading state -->
             <div v-if="loading" class="table-loading-overlay">
                 <div class="table-spinner"></div>
             </div>
 
-            <!-- 페이지네이션 -->
+            <!-- Pagination -->
             <div v-if="pagination && totalPages > 1" class="table-pagination">
                 <div class="pagination-info">
                     {{ paginationInfo }}
@@ -186,7 +186,7 @@ export default {
         },
         searchPlaceholder: {
             type: String,
-            default: '검색...'
+            default: 'Search...'
         },
         filterable: {
             type: Boolean,
@@ -206,7 +206,7 @@ export default {
         },
         emptyText: {
             type: String,
-            default: '데이터가 없습니다'
+            default: 'No data available'
         },
         rowKey: {
             type: String,
@@ -235,7 +235,7 @@ export default {
         filteredData() {
             let result = [...this.data];
 
-            // 검색 필터링
+            // Search filtering
             if (this.searchable && this.searchTerm) {
                 const term = this.searchTerm.toLowerCase();
                 result = result.filter(row => {
@@ -246,7 +246,7 @@ export default {
                 });
             }
 
-            // 필터 적용
+            // Apply filters
             if (this.filterable) {
                 Object.keys(this.activeFilters).forEach(key => {
                     const filterValue = this.activeFilters[key];

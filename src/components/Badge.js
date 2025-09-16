@@ -1,6 +1,6 @@
 /**
- * Badge 컴포넌트
- * 상태 배지
+ * Badge Component
+ * Status badge
  */
 export default {
     name: 'Badge',

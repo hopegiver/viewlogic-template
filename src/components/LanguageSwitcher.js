@@ -1,6 +1,6 @@
 /**
- * LanguageSwitcher 컴포넌트
- * 언어 변환 기능을 제공하는 컴포넌트
+ * LanguageSwitcher Component
+ * Provides language switching functionality
  */
 export default {
     name: 'LanguageSwitcher',
@@ -49,7 +49,7 @@ export default {
                 </button>
             </div>
             
-            <!-- 드롭다운 메뉴 -->
+            <!-- Dropdown menu -->
             <div
                 v-if="variant === 'button' && showDropdown"
                 class="language-dropdown"
@@ -69,7 +69,7 @@ export default {
                 </button>
             </div>
             
-            <!-- 로딩 오버레이 -->
+            <!-- Loading overlay -->
             <div v-if="loading" class="language-loading">
                 <div class="language-spinner"></div>
             </div>
@@ -104,7 +104,7 @@ export default {
             availableLanguages: [
                 {
                     code: 'ko',
-                    label: '한국어',
+                    label: 'Korean',
                     flag: '🇰🇷'
                 },
                 {
@@ -132,19 +132,19 @@ export default {
         }
     },
     mounted() {
-        // i18n 시스템에서 현재 언어 가져오기
+        // Get current language from i18n system
         if (window.i18n) {
             this.currentLanguage = window.i18n.getCurrentLanguage();
             
-            // 언어 변경 이벤트 리스너 등록
+            // Register language change event listener
             window.i18n.on('languageChanged', this.onLanguageChanged);
         }
         
-        // 외부 클릭 시 드롭다운 닫기
+        // Close dropdown on outside click
         document.addEventListener('click', this.closeDropdown);
     },
     unmounted() {
-        // 이벤트 리스너 제거
+        // Remove event listeners
         if (window.i18n) {
             window.i18n.off('languageChanged', this.onLanguageChanged);
         }
@@ -165,7 +165,7 @@ export default {
                     if (success) {
                         this.currentLanguage = languageCode;
                         
-                        // 쿼리 파라미터 업데이트
+                        // Update query parameters
                         if (this.useQueryParam && window.router) {
                             window.router.setQueryParams({ lang: languageCode });
                         }

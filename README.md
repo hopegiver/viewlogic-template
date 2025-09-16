@@ -26,7 +26,7 @@ ViewLogic Router revolutionizes Vue development with two fundamental core princi
 
 ## ✨ Key Features
 
-- 🚀 **Ultra-Lightweight** - Complete routing system in just 13KB gzipped (48KB minified)
+- 🚀 **Ultra-Lightweight** - Complete routing system in just 15.5KB gzipped (56KB minified) with zero dependencies
 - 🔄 **Multiple API Support** - Parallel data fetching from multiple APIs with named data storage  
 - 📝 **Automatic Form Handling** - Revolutionary form submission with `{paramName}` variable parameters
 - 🛠️ **Built-in Components** - Preloaded UI components including revolutionary DynamicInclude & HtmlInclude
@@ -37,7 +37,39 @@ ViewLogic Router revolutionizes Vue development with two fundamental core princi
 - 🔐 **Authentication** - Built-in auth management system
 - 🌐 **i18n Ready** - Built-in internationalization support
 
+### What's Included
+- ✅ Complete routing system with hash/history mode
+- ✅ Advanced caching with TTL and size limits  
+- ✅ Built-in authentication with multiple storage options
+- ✅ Internationalization system with lazy loading
+- ✅ Form handling with automatic validation
+- ✅ RESTful API client with parameter substitution
+- ✅ Component loading and management
+- ✅ Error handling and logging system
+- ✅ Query parameter management and validation
+- ✅ Layout system with slot-based composition
+
+### Zero Dependencies
+ViewLogic Router has **zero runtime dependencies** - it's completely self-contained. You only need Vue 3 as a peer dependency, which you're likely already using.
+
+```javascript
+// No additional imports needed
+import { ViewLogicRouter } from 'viewlogic';
+
+// Everything works out of the box
+const router = new ViewLogicRouter();
+router.mount('#app');
+```
+
+### Performance Benefits
+- 🚀 **Fast Loading**: Minimal JavaScript payload means faster page loads
+- ⚡ **Quick Parsing**: Less JavaScript to parse and compile
+- 💾 **Memory Efficient**: Lower memory footprint for better performance
+- 📱 **Mobile Optimized**: Perfect for mobile and low-bandwidth environments
+
 ## 📦 Installation
+
+### Quick Start (Recommended)
 
 Create a new ViewLogic project with our complete template:
 
@@ -47,7 +79,27 @@ cd my-app
 # Ready to go! No additional setup needed
 ```
 
-Or manually install the router only:
+### Alternative: Clone Template Repository
+
+You can also clone the [viewlogic-template](https://github.com/hopegiver/viewlogic-template) repository directly:
+
+```bash
+git clone https://github.com/hopegiver/viewlogic-template.git my-app
+cd my-app
+npm install
+npm run dev
+```
+
+The template repository includes:
+- Complete project structure with examples
+- Pre-configured development environment
+- Sample views, logic, and components
+- Ready-to-use layouts and styles
+- Development and build scripts
+
+### Manual Installation
+
+Or install just the router package:
 ```bash
 npm install viewlogic
 ```
@@ -95,7 +147,7 @@ npm install viewlogic
     <div id="app"></div>
     
     <!-- Vue 3 (production version) -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/viewlogic/dist/viewlogic-router.umd.js"></script>
     
     <script>
@@ -209,46 +261,54 @@ Note: src/ folder is excluded from production deployment
 ```javascript
 const config = {
     // Basic Configuration
-    basePath: '/src',           // Base path for all resources
-    mode: 'hash',              // 'hash' or 'history'
-    environment: 'development', // 'development' or 'production'
+    basePath: '/',                  // Application base path (for subfolder deployments)
+    srcPath: '/src',               // Source files path (development mode)
+    routesPath: '/routes',         // Routes directory path (production mode)
+    mode: 'hash',                  // 'hash' or 'history'
+    environment: 'development',     // 'development' or 'production'
     
-    // Routing
-    routesPath: '/routes',      // Routes directory path
-    defaultLayout: 'default',   // Default layout name
-    useLayout: true,           // Enable layouts
+    // Routing & Layout
+    useLayout: true,               // Enable layout system
+    defaultLayout: 'default',      // Default layout name
     
-    // Caching
-    cacheMode: 'memory',       // 'memory' or 'session' or 'none'
-    cacheTTL: 300000,         // Cache TTL in milliseconds
-    maxCacheSize: 50,         // Maximum cache entries
-    
-    // Components
-    useComponents: true,       // Enable built-in components
-    componentNames: [          // Components to preload
-        'Button', 'Modal', 'Card', 'Toast', 
-        'Input', 'Tabs', 'Checkbox', 'Alert'
-    ],
+    // Caching System
+    cacheMode: 'memory',           // 'memory', 'session', or 'none'
+    cacheTTL: 300000,             // Cache TTL in milliseconds (5 minutes)
+    maxCacheSize: 50,             // Maximum cache entries
     
     // Internationalization
-    useI18n: true,            // Enable i18n
-    defaultLanguage: 'ko',    // Default language
+    useI18n: false,               // Enable i18n support
+    defaultLanguage: 'ko',        // Default language
+    i18nPath: '/i18n',           // i18n files path
     
-    // Authentication
-    authEnabled: false,       // Enable authentication
-    loginRoute: 'login',      // Login route name
-    protectedRoutes: [],      // Protected route names
-    publicRoutes: ['login', 'register', 'home'],
-    authStorage: 'cookie',    // 'cookie' or 'localStorage'
+    // Authentication System
+    authEnabled: false,                    // Enable authentication
+    loginRoute: 'login',                   // Login route name
+    redirectAfterLogin: 'home',            // Route after successful login
+    protectedRoutes: [],                   // Array of protected route names
+    protectedPrefixes: [],                 // Array of protected route prefixes
+    publicRoutes: ['login', 'register', 'home'], // Public routes (bypass auth)
+    checkAuthFunction: null,               // Custom auth validation function
+    authStorage: 'cookie',                 // 'cookie' or 'localStorage'
+    authCookieName: 'authToken',          // Primary auth cookie name
+    authFallbackCookieNames: [            // Fallback cookie names to check
+        'accessToken', 'token', 'jwt'
+    ],
+    authCookieOptions: {},                // Custom cookie options
+    authSkipValidation: false,            // Skip auth validation entirely
     
-    // Security
-    enableParameterValidation: true,
-    maxParameterLength: 1000,
-    maxParameterCount: 50,
+    // Security & Validation
+    enableParameterValidation: true,       // Enable parameter validation
+    maxParameterLength: 1000,             // Max length per parameter
+    maxParameterCount: 50,                // Max number of parameters
+    maxArraySize: 100,                    // Max array size in parameters
+    allowedKeyPattern: /^[a-zA-Z0-9_-]+$/, // Allowed parameter key pattern
+    logSecurityWarnings: true,             // Log security-related warnings
     
-    // Development
-    logLevel: 'info',         // 'debug', 'info', 'warn', 'error'
-    enableErrorReporting: true
+    // Development & Debugging
+    logLevel: 'info',                     // 'debug', 'info', 'warn', 'error'
+    enableErrorReporting: true,           // Enable error reporting system
+    version: '1.0.0'                      // Application version
 };
 ```
 
@@ -338,10 +398,15 @@ const current = router.getCurrentRoute();
 // In route components - global methods automatically available:
 export default {
     dataURL: '/api/products', // Auto-fetch data
-    mounted() {
+    async mounted() {
         const id = this.getParam('id');           // Get parameter
         this.navigateTo('detail', { id });        // Navigate
         console.log('Data loaded:', this.products); // From dataURL
+        
+        // New $api pattern for RESTful API calls
+        const user = await this.$api.get('/api/users/{userId}');
+        await this.$api.post('/api/analytics', { pageView: 'products' });
+        
         if (this.$isAuthenticated()) { /* auth check */ }
         const text = this.$t('welcome.message');   // i18n
     }
@@ -351,163 +416,11 @@ export default {
 ### Key Global Methods (Auto-available in all route components)
 - **Navigation**: `navigateTo()`, `getCurrentRoute()`
 - **Parameters**: `getParams()`, `getParam(key, defaultValue)`
-- **Data Fetching**: `$fetchData()`, `$fetchAllData()` (with dataURL)
+- **Data Fetching**: `$fetchData()` (with dataURL), `$api.get()`, `$api.post()`, `$api.put()`, `$api.patch()`, `$api.delete()`
 - **Authentication**: `$isAuthenticated()`, `$getToken()`, `$logout()`
-- **Forms**: Auto-binding with `action` attribute and `{param}` templates
+- **Forms**: Auto-binding with `action` attribute, duplicate prevention, validation
 - **i18n**: `$t(key, params)` for translations
 
-### Auto-Injected Properties
-```javascript
-// Automatically available in every route component:
-// currentRoute, $query, $lang, $dataLoading
-```
-
-## 🎯 View-Logic Separation: Core Philosophy in Action
-
-ViewLogic Router's fundamental philosophy of **View-Logic Separation** creates clear boundaries between concerns:
-
-### Philosophy Benefits
-- **🎨 Pure Presentation**: Views contain only HTML - no mixed logic or scripts
-- **🧠 Pure Logic**: JavaScript components focus solely on business logic
-- **⚡ Zero Build Required**: Work directly with separate files in development
-- **🔄 Hot Reload**: Instant changes without compilation or bundling
-
-### File Structure (Core Philosophy)
-- **View**: `src/views/products.html` - Pure HTML template
-- **Logic**: `src/logic/products.js` - Pure Vue component logic  
-- **Style**: `src/styles/products.css` - Pure CSS styles
-
-### Example: Philosophy in Practice
-```javascript
-// src/logic/products.js - Pure business logic
-export default {
-    name: 'ProductsList',
-    dataURL: '/api/products',  // Auto-fetch data
-    data() {
-        return { title: 'Our Products' };
-    },
-    methods: {
-        viewDetail(id) {
-            this.navigateTo('product-detail', { id });
-        }
-    }
-};
-```
-
-### Production: Automatic Optimization
-All separate files automatically combine into optimized bundles in `routes/` folder - maintaining the development philosophy while optimizing for production.
-
-## 🔄 Zero Build Development vs Optimized Production
-
-ViewLogic Router's **Zero Build Development** (core philosophy) vs optimized production:
-
-| Mode | Philosophy | Files | Requests | Experience |
-|------|------------|-------|----------|------------|
-| **Development** | **Zero Build Required** | Separate files | 4 per route | **Real-time, instant changes** |
-| **Production** | **Optimized Performance** | Single bundle | 1 per route | **Lightning-fast loading** |
-
-```javascript
-// Zero Build Development (Core Philosophy)
-ViewLogicRouter({ environment: 'development' }); // Work directly with source files
-
-// Optimized Production  
-ViewLogicRouter({ environment: 'production' }); // Use pre-built bundles
-```
-
-### Zero Build Development Benefits
-- ⚡ **Instant Changes** - Edit HTML/JS/CSS and see changes immediately
-- 🚀 **Zero Setup** - No webpack, vite, or build tools required
-- 🎯 **True Hot Reload** - Files load directly from src/ folder
-- 🛠️ **Pure Development** - Focus on code, not build configuration
-
-## 🪶 Ultra-Lightweight Bundle
-
-ViewLogic Router provides a complete routing solution in an incredibly small package:
-
-### Size Comparison
-- **ViewLogic Router**: 13KB gzipped (48KB minified)
-- **Vue Router + Auth + i18n + Cache**: 50KB+ gzipped
-
-### What's Included in 13KB
-- ✅ Complete Vue 3 routing system
-- ✅ Authentication & authorization
-- ✅ Internationalization (i18n)
-- ✅ Smart caching system
-- ✅ Query parameter management
-- ✅ Component lazy loading
-- ✅ Layout system
-- ✅ Error handling
-- ✅ Development/production modes
-- ✅ **Automatic data fetching with dataURL**
-- ✅ **Revolutionary DynamicInclude & HtmlInclude components**
-- ✅ **Automatic form handling with variable parameters**
-- ✅ **10+ Built-in UI components (Button, Modal, Card, etc.)**
-
-### Why So Small?
-- **Zero Dependencies** - No external libraries required (except Vue 3)
-- **Tree-Shakable** - Only includes what you use
-- **Optimized Code** - Hand-crafted for minimal bundle size
-- **Smart Bundling** - Efficient code organization and minification
-
-### Performance Benefits
-- **Faster Load Times** - 70% smaller than typical Vue router setups
-- **Better UX** - Instant page loads with minimal JavaScript overhead
-- **Mobile Optimized** - Perfect for mobile-first applications
-- **CDN Friendly** - Small size ideal for CDN distribution
-
-## 🏆 Performance Comparison
-
-### Bundle Size Comparison
-| Router System | Bundle Size (Gzipped) | Features Included |
-|---------------|----------------------|------------------|
-| **ViewLogic Router** | **13KB** | Routing + Auth + i18n + Cache + Query + Components |
-| Vue Router | 12KB | Routing only |
-| Vue Router + Pinia | 18KB | Routing + State |
-| React Router | 15KB | Routing only |
-| Next.js Router | 25KB+ | Routing + SSR |
-| Nuxt Router | 30KB+ | Routing + SSR + Meta |
-
-### Runtime Performance Comparison
-
-#### Traditional SPA Routing
-```
-Route Change Process:
-├── 1️⃣ Parse route
-├── 2️⃣ Load component bundle
-├── 3️⃣ Execute component code
-├── 4️⃣ Load template (if separate)
-├── 5️⃣ Load styles (if separate)
-├── 6️⃣ Apply i18n translations
-├── 7️⃣ Check authentication
-└── 8️⃣ Render component
-
-Total: Multiple operations + Bundle parsing
-```
-
-#### ViewLogic Router (Production)
-```
-Route Change Process:
-├── 1️⃣ Load pre-built route bundle (all-in-one)
-└── 2️⃣ Render component
-
-Total: Single optimized operation
-```
-
-### Performance Advantages
-- **🚀 75% Faster Loading** - Pre-bundled routes vs on-demand compilation
-- **📦 Smaller Footprint** - 13KB includes everything others need 30KB+ for
-- **⚡ Instant Navigation** - No build-time compilation in production
-- **🎯 Route-Level Optimization** - Each route is independently optimized
-- **💾 Superior Caching** - Route-level caching vs component-level caching
-- **🔄 Zero Hydration** - No server-side rendering complexity
-
-### Why ViewLogic Router Wins
-1. **Pre-compilation**: Routes are pre-built, not compiled at runtime
-2. **All-in-One Bundles**: View + Logic + Style in single optimized file
-3. **Zero Dependencies**: No additional libraries needed for full functionality
-4. **Smart Caching**: Route-level caching with intelligent invalidation
-5. **Optimized Architecture**: Purpose-built for maximum performance
-6. **Revolutionary Components**: DynamicInclude & HtmlInclude for dynamic content loading
 
 ## 🚀 Revolutionary Built-in Components
 
@@ -640,28 +553,95 @@ export default {
 - **Named Data Storage** - Each API result stored with its defined name
 - **Event Support** - `@data-loaded` and `@data-error` events with detailed info
 
-### Why These Components Are Revolutionary
 
-**Traditional Approach**: 30+ lines of loading states, error handling, and manual API calls.
+### Basic API Usage
 
-**ViewLogic Approach**: `dataURL: '/api/products'` - That's it! Data automatically fetched and available as `this.products`.
+```javascript
+// src/logic/user-profile.js
+export default {
+    name: 'UserProfile',
+    
+    async mounted() {
+        try {
+            // GET request with automatic parameter substitution
+            const user = await this.$api.get('/api/users/{userId}');
+            
+            // POST request with data
+            const response = await this.$api.post('/api/users/{userId}/posts', {
+                title: 'New Post',
+                content: 'Post content here'
+            });
+            
+            // PUT request for updates
+            await this.$api.put('/api/users/{userId}', {
+                name: user.name,
+                email: user.email
+            });
+            
+            // DELETE request
+            await this.$api.delete('/api/posts/{postId}');
+            
+        } catch (error) {
+            console.error('API call failed:', error);
+            this.handleError(error);
+        }
+    }
+};
+```
 
-### Common Use Cases
-- **Single API**: `dataURL: '/api/products'` - Product listings, user profiles, articles
-- **Multiple APIs**: `dataURL: { stats: '/api/stats', users: '/api/users' }` - Dashboards, admin panels
-- **Dynamic Content**: `<DynamicInclude page="login" :params="{ theme: 'compact' }" />`
-- **HTML Includes**: `<HtmlInclude src="/widgets/weather.html" :sanitize="true" />`
+### Advanced API Features
 
-### Advantages
-- ✅ **Auto Data Fetching** with `dataURL` property (others: manual logic)
-- ✅ **Parameter Integration** - Query params sent automatically
-- ✅ **Loading States** - `$dataLoading` auto-managed
-- ✅ **Built-in Security** - HTML sanitization included
-- ✅ **Zero Setup** - Works immediately without configuration
+```javascript
+export default {
+    methods: {
+        async handleUserActions() {
+            // With custom headers
+            const data = await this.$api.get('/api/protected-data', {
+                headers: { 'X-Custom-Header': 'value' }
+            });
+            
+            // File upload with FormData
+            const formData = new FormData();
+            formData.append('file', this.selectedFile);
+            await this.$api.post('/api/upload', formData);
+            
+            // With query parameters (automatically added from current route)
+            // URL: /users?id=123 → API call includes ?id=123
+            const result = await this.$api.get('/api/user-data');
+        },
+        
+        // Error handling patterns
+        async safeApiCall() {
+            try {
+                const user = await this.$api.get('/api/users/{userId}');
+                this.user = user;
+                
+            } catch (error) {
+                if (error.message.includes('404')) {
+                    this.showError('User not found');
+                } else if (error.message.includes('401')) {
+                    this.navigateTo('login');
+                } else {
+                    this.showError('Something went wrong');
+                }
+            }
+        }
+    }
+};
+```
 
-## 📝 Automatic Form Handling with Variable Parameters
+### Key $api Features
 
-ViewLogic Router includes revolutionary automatic form handling that eliminates the need for manual form submission logic. Just define your forms with `action` attributes and the router handles the rest!
+- **🎯 Parameter Substitution**: `{userId}` automatically replaced with component data or route params
+- **🔐 Auto Authentication**: Authorization headers automatically added when token is available  
+- **📄 Smart Data Handling**: JSON and FormData automatically detected and processed
+- **🔗 Query Integration**: Current route query parameters automatically included
+- **⚡ Error Standardization**: Consistent error format across all API calls
+- **🚀 RESTful Pattern**: Clean `get()`, `post()`, `put()`, `patch()`, `delete()` methods
+
+## 📝 Advanced Form Handling with Smart Features
+
+ViewLogic Router includes revolutionary automatic form handling with duplicate prevention, validation, and error handling. Just define your forms with `action` attributes and the router handles everything!
 
 ### Basic Form Handling
 
@@ -683,14 +663,81 @@ ViewLogic Router includes revolutionary automatic form handling that eliminates 
 export default {
     name: 'ContactPage',
     mounted() {
-        // Forms are automatically bound - no additional code needed!
-        // Form submission will automatically POST to /api/contact
-        console.log('Form handling is automatic!');
+        // Forms are automatically bound with smart features:
+        // ✅ Duplicate submission prevention
+        // ✅ Automatic validation
+        // ✅ Loading state management
+        // ✅ Error handling
+        console.log('Smart form handling is automatic!');
     }
 };
 ```
 
-### Variable Parameter Forms - 🆕 Revolutionary!
+### Smart Form Features - 🆕 Enhanced!
+
+ViewLogic FormHandler now includes advanced features for production-ready applications:
+
+```html
+<!-- Smart form with all features -->
+<form action="/api/users/{userId}/update" method="PUT" 
+      class="auto-form"
+      data-success-handler="handleSuccess"
+      data-error-handler="handleError"
+      data-loading-handler="handleLoading"
+      data-redirect="/profile">
+    
+    <input type="text" name="name" required 
+           data-validation="validateName">
+    <input type="email" name="email" required>
+    <button type="submit">Update Profile</button>
+</form>
+```
+
+```javascript
+export default {
+    methods: {
+        // Custom validation
+        validateName(value) {
+            return value.length >= 2 && value.length <= 50;
+        },
+        
+        // Success handler
+        handleSuccess(response, form) {
+            this.showToast('Profile updated successfully!', 'success');
+            // Automatic redirect to /profile happens after this
+        },
+        
+        // Error handler with smart error detection
+        handleError(error, form) {
+            if (error.message.includes('validation')) {
+                this.showToast('Please check your input', 'warning');
+            } else {
+                this.showToast('Update failed. Please try again.', 'error');
+            }
+        },
+        
+        // Loading state handler
+        handleLoading(isLoading, form) {
+            const button = form.querySelector('button[type="submit"]');
+            button.disabled = isLoading;
+            button.textContent = isLoading ? 'Updating...' : 'Update Profile';
+        }
+    }
+};
+```
+
+### Key Form Features
+
+- **🚫 Duplicate Prevention**: Automatic duplicate submission blocking
+- **⏱️ Timeout Management**: 30-second default timeout with abort capability
+- **✅ Built-in Validation**: HTML5 + custom validation functions
+- **🔄 Loading States**: Automatic loading state management
+- **🎯 Smart Error Handling**: Network vs validation error distinction
+- **📄 File Upload Support**: Automatic FormData vs JSON detection
+- **🔀 Auto Redirect**: Post-success navigation
+- **🏷️ Parameter Substitution**: Dynamic URL parameter replacement
+
+### Variable Parameter Forms - Revolutionary!
 
 The most powerful feature is **variable parameter support** in action URLs. You can use simple template syntax to inject dynamic values:
 
@@ -850,10 +897,6 @@ export default {
 - ✅ **File Uploads** - Automatic multipart support
 - ✅ **Built-in Validation** - HTML5 + custom functions
 
-### Code Comparison
-**Traditional**: 30+ lines of boilerplate for forms, API calls, loading states  
-**ViewLogic**: 5 lines with `action` attribute + callback method  
-**Result**: 80% less code, more features included
 
 ## 🔗 Query-Based Parameter System: Revolutionary Simplicity
 
@@ -883,12 +926,6 @@ export default {
     }
 };
 ```
-
-### Why Query-Based is Revolutionary
-**Traditional Routers**: Complex path parameters (`/users/:id/posts/:postId`) require route configuration, parameter extraction logic, and mixed paradigms.
-
-**ViewLogic Router**: Simple query parameters (`/users?id=123&postId=456`) work universally with consistent `getParam()` access.
-
 
 ## 🛡️ Error Handling
 

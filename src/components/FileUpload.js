@@ -1,6 +1,6 @@
 /**
- * FileUpload 컴포넌트
- * 파일 업로드
+ * FileUpload Component
+ * File upload functionality
  */
 export default {
     name: 'FileUpload',
@@ -8,7 +8,7 @@ export default {
         <div class="file-upload-wrapper" :class="wrapperClasses">
             <label v-if="label" class="file-upload-label">{{ label }}</label>
             
-            <!-- 드래그 앤 드롭 영역 -->
+            <!-- Drag and drop area -->
             <div
                 class="file-upload-area"
                 :class="areaClasses"
@@ -38,18 +38,18 @@ export default {
                         </div>
                         <div class="file-upload-text">
                             <p class="file-upload-primary-text">
-                                {{ dragActive ? '파일을 여기에 드롭하세요' : '파일을 선택하거나 드래그하세요' }}
+                                {{ dragActive ? 'Drop files here' : 'Select or drag files here' }}
                             </p>
                             <p class="file-upload-secondary-text">
                                 {{ acceptText }}
                             </p>
                         </div>
                         <button type="button" class="file-upload-button" :disabled="disabled">
-                            파일 선택
+                            Select Files
                         </button>
                     </div>
                     
-                    <!-- 업로드된 파일 목록 -->
+                    <!-- Uploaded files list -->
                     <div v-else class="file-upload-files">
                         <div
                             v-for="(file, index) in files"
@@ -82,14 +82,14 @@ export default {
                                     v-if="file.status === 'error'"
                                     class="file-upload-retry"
                                     @click.stop="retryUpload(file, index)"
-                                    title="다시 시도"
+                                    title="Retry"
                                 >
                                     🔄
                                 </button>
                                 <button
                                     class="file-upload-remove"
                                     @click.stop="removeFile(index)"
-                                    title="제거"
+                                    title="Remove"
                                 >
                                     ×
                                 </button>
@@ -103,7 +103,7 @@ export default {
                             @click="openFileDialog"
                             :disabled="disabled"
                         >
-                            + 파일 추가
+                            + Add Files
                         </button>
                     </div>
                 </div>
@@ -210,7 +210,7 @@ export default {
             ];
         },
         acceptText() {
-            if (!this.accept) return '모든 파일';
+            if (!this.accept) return 'All files';
             
             const types = this.accept.split(',').map(type => type.trim());
             const extensions = types.filter(type => type.startsWith('.'));
@@ -223,14 +223,14 @@ export default {
             if (mimeTypes.length > 0) {
                 if (text) text += ', ';
                 text += mimeTypes.map(type => {
-                    if (type.startsWith('image/')) return '이미지';
-                    if (type.startsWith('video/')) return '비디오';
-                    if (type.startsWith('audio/')) return '오디오';
+                    if (type.startsWith('image/')) return 'Images';
+                    if (type.startsWith('video/')) return 'Videos';
+                    if (type.startsWith('audio/')) return 'Audio';
                     return type;
                 }).join(', ');
             }
             
-            return text || '모든 파일';
+            return text || 'All files';
         }
     },
     methods: {
@@ -241,7 +241,7 @@ export default {
         handleFileSelect(event) {
             const files = Array.from(event.target.files);
             this.addFiles(files);
-            // 입력 초기화
+            // Reset input
             event.target.value = '';
         },
         handleDrop(event) {
@@ -303,22 +303,22 @@ export default {
             this.updateModelValue();
         },
         validateFile(file) {
-            // 크기 검증
+            // Size validation
             if (this.maxSize && file.size > this.maxSize) {
                 this.$emit('error', {
                     type: 'size',
                     file,
-                    message: `파일 크기가 너무 큽니다. 최대 ${this.formatFileSize(this.maxSize)}`
+                    message: `File size too large. Maximum ${this.formatFileSize(this.maxSize)}`
                 });
                 return false;
             }
             
-            // 파일 형식 검증
+            // File type validation
             if (this.accept && !this.isAcceptedFileType(file)) {
                 this.$emit('error', {
                     type: 'type',
                     file,
-                    message: '지원되지 않는 파일 형식입니다.'
+                    message: 'Unsupported file format.'
                 });
                 return false;
             }
@@ -360,7 +360,7 @@ export default {
             const formData = new FormData();
             formData.append('file', file);
             
-            // 추가 데이터 추가
+            // Add additional data
             Object.keys(this.uploadData).forEach(key => {
                 formData.append(key, this.uploadData[key]);
             });
@@ -390,10 +390,10 @@ export default {
                 
                 xhr.onerror = () => {
                     file.status = 'error';
-                    this.$emit('upload-error', { file, error: '업로드 실패' });
+                    this.$emit('upload-error', { file, error: 'Upload failed' });
                 };
                 
-                // 헤더 설정
+                // Set headers
                 Object.keys(this.uploadHeaders).forEach(key => {
                     xhr.setRequestHeader(key, this.uploadHeaders[key]);
                 });
