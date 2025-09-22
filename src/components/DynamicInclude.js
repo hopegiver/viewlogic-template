@@ -9,9 +9,9 @@ export default {
     `,
     
     props: {
-        page: { 
-            type: String, 
-            required: true 
+        page: {
+            type: String,
+            required: true
         }
     },
     
@@ -23,6 +23,7 @@ export default {
             dynamicComponent: null
         };
     },
+
     
     async mounted() {
         await this.loadPage();

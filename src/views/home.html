@@ -5,76 +5,29 @@
             <div class="hero-content">
                 <h1 class="hero-title">{{ heroTitle }}</h1>
                 <p class="hero-subtitle">{{ heroSubtitle }}</p>
-                <p class="hero-description">{{ heroDescription }}</p>
-
                 <div class="hero-actions">
-                    <button class="btn btn-primary btn-large" @click="navigateTo('components')">
-                        🚀 Explore Components
+                    <button class="btn btn-primary btn-large" @click="navigateTo('contact')">
+                        Get Started
                     </button>
-                    <button class="btn btn-outline btn-large" @click="navigateTo('contact')">
-                        📧 Get in Touch
+                    <button class="btn btn-outline btn-large" @click="navigateTo('components')">
+                        Learn More
                     </button>
-                </div>
-
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-number">13KB</span>
-                        <span class="stat-label">Gzipped Size</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">20+</span>
-                        <span class="stat-label">Components</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">0</span>
-                        <span class="stat-label">Build Required</span>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Core Philosophy Section -->
-    <div class="philosophy-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>🎯 Core Philosophy: Simplicity Through Design</h2>
-                <p>ViewLogic Router revolutionizes Vue development with two fundamental principles</p>
-            </div>
-
-            <div class="philosophy-grid">
-                <Card
-                    v-for="philosophy in philosophies"
-                    :key="philosophy.title"
-                    :title="philosophy.title"
-                    :subtitle="philosophy.subtitle"
-                    shadow="medium"
-                    hoverable
-                    class="philosophy-card"
-                >
-                    <div class="philosophy-content">
-                        <div class="philosophy-icon">{{ philosophy.icon }}</div>
-                        <p>{{ philosophy.description }}</p>
-                        <ul class="philosophy-benefits">
-                            <li v-for="benefit in philosophy.benefits" :key="benefit">{{ benefit }}</li>
-                        </ul>
-                    </div>
-                </Card>
-            </div>
-        </div>
-    </div>
-
-    <!-- Key Features Section -->
+    <!-- Features Section -->
     <div class="features-section">
         <div class="container">
             <div class="section-header">
-                <h2>✨ Key Features</h2>
-                <p>Everything you need for modern Vue.js development</p>
+                <h2>Why Choose Us</h2>
+                <p>Simple, powerful, and easy to use</p>
             </div>
 
             <div class="features-grid">
                 <div
-                    v-for="feature in keyFeatures"
+                    v-for="feature in features"
                     :key="feature.title"
                     class="feature-item"
                 >
@@ -86,279 +39,16 @@
         </div>
     </div>
 
-    <!-- Revolutionary Components Section -->
-    <div class="revolutionary-section">
+    <!-- Call to Action Section -->
+    <div class="cta-section">
         <div class="container">
-            <div class="section-header">
-                <h2>🚀 Revolutionary Built-in Components</h2>
-                <p>Groundbreaking components that revolutionize how you handle dynamic content</p>
-            </div>
-
-            <Tabs
-                v-model="activeTab"
-                :tabs="revolutionaryTabs"
-                variant="pills"
-                class="revolutionary-tabs"
-            >
-                <template #dataurl>
-                    <div class="feature-showcase">
-                        <div class="showcase-content">
-                            <h3>Automatic Data Fetching with dataURL</h3>
-                            <p>Eliminate manual API calls in component lifecycle hooks. Just define <code>dataURL</code> and data is automatically fetched!</p>
-
-                            <h4>Single API (Simple Usage)</h4>
-                            <div class="code-example">
-                                <pre><code>export default {
-    name: 'ProductsList',
-    dataURL: '/api/products',  // ✨ Magic happens here!
-    mounted() {
-        // Data is already fetched and available!
-        console.log('Products loaded:', this.products);
-    }
-};</code></pre>
-                            </div>
-
-                            <h4>Multiple APIs (Revolutionary!)</h4>
-                            <div class="code-example">
-                                <pre><code>export default {
-    name: 'Dashboard',
-    dataURL: {
-        products: '/api/products',
-        categories: '/api/categories',
-        stats: '/api/dashboard/stats'
-    },  // ✨ Multiple APIs with named data!
-    mounted() {
-        // All APIs called in parallel, data available by name!
-        console.log('Products:', this.products);
-        console.log('Categories:', this.categories);
-        console.log('Stats:', this.stats);
-    }
-};</code></pre>
-                            </div>
-                        </div>
-                    </div>
-                </template>
-
-                <template #forms>
-                    <div class="feature-showcase">
-                        <div class="showcase-content">
-                            <h3>Automatic Form Handling with Variable Parameters</h3>
-                            <p>Revolutionary form handling that eliminates manual submission logic. Use template syntax for dynamic parameters!</p>
-
-                            <div class="code-example">
-                                <pre><code>&lt;!-- Dynamic form actions with variable parameters --&gt;
-&lt;form action="/api/users/{userId}/posts" method="POST"
-      data-success="handleSuccess"&gt;
-    &lt;input type="text" name="title" required&gt;
-    &lt;textarea name="content" required&gt;&lt;/textarea&gt;
-    &lt;button type="submit"&gt;Create Post&lt;/button&gt;
-&lt;/form&gt;
-
-&lt;!-- Component logic - parameters resolved automatically --&gt;
-export default {
-    data() {
-        return {
-            userId: 123    // {userId} will be replaced with this value
-        };
-    },
-    methods: {
-        handleSuccess(response) {
-            console.log('Post created!', response);
-        }
-    }
-};</code></pre>
-                            </div>
-                        </div>
-                    </div>
-                </template>
-
-                <template #dynamic>
-                    <div class="feature-showcase">
-                        <div class="showcase-content">
-                            <h3>DynamicInclude & HtmlInclude Components</h3>
-                            <p>Load dynamic content from any URL with full Vue reactivity and parameter injection.</p>
-
-                            <div class="code-example">
-                                <pre><code>&lt;!-- DynamicInclude - Load ViewLogic pages dynamically --&gt;
-&lt;DynamicInclude
-    page="login"
-    :use-cache="false"
-    loading-text="Loading login page..."
-    :params="{
-        returnUrl: '/dashboard',
-        theme: 'compact'
-    }"
-/&gt;
-
-&lt;!-- HtmlInclude - Include raw HTML with XSS protection --&gt;
-&lt;HtmlInclude
-    src="/widgets/weather.html"
-    :sanitize="true"
-    loading-text="Loading widget..."
-/&gt;</code></pre>
-                            </div>
-                        </div>
-                    </div>
-                </template>
-            </Tabs>
-        </div>
-    </div>
-
-    <!-- Performance Comparison Section -->
-    <div class="performance-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>🏆 Performance Comparison</h2>
-                <p>See how ViewLogic Router outperforms traditional solutions</p>
-            </div>
-
-            <div class="comparison-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Router System</th>
-                            <th>Bundle Size (Gzipped)</th>
-                            <th>Features Included</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="highlight-row">
-                            <td><strong>ViewLogic Router</strong></td>
-                            <td><strong>13KB</strong></td>
-                            <td>Routing + Auth + i18n + Cache + Query + Components</td>
-                        </tr>
-                        <tr>
-                            <td>Vue Router</td>
-                            <td>12KB</td>
-                            <td>Routing only</td>
-                        </tr>
-                        <tr>
-                            <td>Vue Router + Pinia</td>
-                            <td>18KB</td>
-                            <td>Routing + State</td>
-                        </tr>
-                        <tr>
-                            <td>React Router</td>
-                            <td>15KB</td>
-                            <td>Routing only</td>
-                        </tr>
-                        <tr>
-                            <td>Next.js Router</td>
-                            <td>25KB+</td>
-                            <td>Routing + SSR</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="performance-benefits">
-                <div class="benefit-item">
-                    <span class="benefit-percentage">75%</span>
-                    <span class="benefit-label">Faster Loading</span>
-                </div>
-                <div class="benefit-item">
-                    <span class="benefit-percentage">80%</span>
-                    <span class="benefit-label">Less Code</span>
-                </div>
-                <div class="benefit-item">
-                    <span class="benefit-percentage">100%</span>
-                    <span class="benefit-label">Zero Build</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Getting Started Section -->
-    <div class="getting-started-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>🚀 Quick Start</h2>
-                <p>Get started with ViewLogic Router in minutes</p>
-            </div>
-
-            <div class="getting-started-content">
-                <Card title="Development Mode (No Build Required!)" subtitle="Work directly with source files" shadow="large">
-                    <div class="code-example">
-                        <pre><code>&lt;!-- Load ViewLogic Router --&gt;
-&lt;script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"&gt;&lt;/script&gt;
-&lt;script src="https://cdn.jsdelivr.net/npm/viewlogic/dist/viewlogic-router.umd.js"&gt;&lt;/script&gt;
-
-&lt;script&gt;
-    // Development mode - loads files directly from src/
-    ViewLogicRouter({
-        environment: 'development',
-    });
-&lt;/script&gt;</code></pre>
-                    </div>
-                </Card>
-
-                <Card title="Production Mode (Optimized Bundles)" subtitle="Lightning-fast production builds" shadow="large">
-                    <div class="code-example">
-                        <pre><code>&lt;script&gt;
-    // Production mode - loads pre-built bundles from routes/
-    ViewLogicRouter({
-        environment: 'production',
-        useI18n: true,
-        logLevel: 'error'
-    });
-&lt;/script&gt;</code></pre>
-                    </div>
-                </Card>
-            </div>
-
-            <div class="quick-actions">
-                <button class="btn btn-primary btn-large" @click="navigateTo('components')">
-                    📦 View Components
-                </button>
-                <button class="btn btn-outline btn-large" @click="showDemo">
-                    🎮 Try Live Demo
+            <div class="cta-content">
+                <h2>Ready to Get Started?</h2>
+                <p>Join thousands of satisfied customers today</p>
+                <button class="btn btn-primary btn-large" @click="navigateTo('contact')">
+                    Contact Us
                 </button>
             </div>
         </div>
     </div>
-
-    <!-- Live Demo Modal -->
-    <Modal
-        v-model="showDemoModal"
-        title="Live Demo"
-        size="large"
-    >
-        <div class="demo-content">
-            <h4>Try ViewLogic Components Live</h4>
-            <p>Experience the power of ViewLogic Router components in action!</p>
-
-            <div class="demo-showcase">
-                <div class="demo-item">
-                    <Input
-                        label="Demo Input"
-                        placeholder="Try typing here"
-                        v-model="demoInput"
-                        help-text="This input uses the ViewLogic Input component"
-                    />
-                </div>
-
-                <div class="demo-item">
-                    <div class="demo-buttons">
-                        <button class="btn btn-primary" @click="showToast('Primary button clicked!', 'success')">Primary Button</button>
-                        <button class="btn btn-secondary" @click="showToast('Secondary button clicked!', 'info')">Secondary Button</button>
-                        <button class="btn btn-outline" @click="showToast('Outline button clicked!', 'warning')">Outline Button</button>
-                    </div>
-                </div>
-
-                <div class="demo-item">
-                    <Card title="Demo Card" subtitle="This is a sample card component">
-                        <p>Card content with dynamic input: <strong>{{ demoInput || 'Type something above!' }}</strong></p>
-                    </Card>
-                </div>
-            </div>
-        </div>
-
-        <template #footer>
-            <button class="btn btn-primary" @click="navigateTo('components')">View All Components</button>
-            <button class="btn btn-outline" @click="showDemoModal = false">Close</button>
-        </template>
-    </Modal>
-
-    <!-- Toast Container -->
-    <Toast ref="toast" />
 </div>
