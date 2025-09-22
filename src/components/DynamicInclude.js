@@ -2,9 +2,8 @@ export default {
     name: 'DynamicInclude',
     template: `
         <div class="dynamic-include">
-            <div v-if="loading">Loading...</div>
-            <div v-else-if="error">{{ errorMessage }}</div>
-            <component v-else :is="dynamicComponent" />
+            <div v-if="error">{{ errorMessage }}</div>
+            <component v-else-if="dynamicComponent" :is="dynamicComponent" />
         </div>
     `,
     
@@ -20,8 +19,15 @@ export default {
             loading: false,
             error: false,
             errorMessage: '',
-            dynamicComponent: null
+            dynamicComponent: null,
+            loadingStartTime: null
         };
+    },
+
+    computed: {
+        loadingDuration() {
+            return this.loadingStartTime ? Date.now() - this.loadingStartTime : 0;
+        }
     },
 
     
@@ -49,6 +55,7 @@ export default {
             
             this.loading = true;
             this.error = false;
+            this.loadingStartTime = Date.now();
             
             try {
                 // Check router status
@@ -101,6 +108,7 @@ export default {
                 this.dynamicComponent = null;
             } finally {
                 this.loading = false;
+                this.loadingStartTime = null;
             }
         },
         
