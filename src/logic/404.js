@@ -52,13 +52,5 @@ export default {
                 this.navigateTo('home');
             }
         }
-    },
-    mounted() {
-        // Track 404 page visits
-        console.warn('404 page visit:', {
-            requestedUrl: this.requestedUrl,
-            timestamp: new Date().toISOString(),
-            referrer: document.referrer
-        });
     }
 }
