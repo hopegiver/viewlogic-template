@@ -176,6 +176,11 @@ body {
 /* ====================================
    Navigation
    ==================================== */
+/* Header container */
+header {
+    position: relative;
+    z-index: 1000;
+}
 .main-nav {
     background: #fff;
     padding: 0;
@@ -426,7 +431,7 @@ body {
         border: none;
         cursor: pointer;
         padding: var(--space-sm);
-        order: -1; /* Place hamburger on the left */
+        order: 1; /* Place hamburger on the right */
     }
     
     .nav-toggle-bar {
@@ -459,16 +464,16 @@ body {
         display: block;
     }
 
-    /* Left sliding sidebar menu */
+    /* Right sliding sidebar menu */
     .nav-menu {
         position: fixed;
         top: 0;
-        left: 0;
+        right: 0;
         width: 280px;
         height: 100%;
         background: var(--color-white);
         box-shadow: var(--shadow-lg);
-        transform: translateX(-100%);
+        transform: translateX(100%);
         opacity: 1;
         visibility: visible;
         transition: transform var(--transition-base);
@@ -589,7 +594,7 @@ body {
 
     .nav-brand {
         order: 0;
-        margin-left: var(--space-sm);
+        flex: 1; /* Take remaining space, pushing hamburger to right */
     }
 }
 
@@ -1887,10 +1892,6 @@ body {
     
     .container {
         padding: 0 15px;
-    }
-    
-    body {
-        padding-top: 120px;
     }
     
     #app {
