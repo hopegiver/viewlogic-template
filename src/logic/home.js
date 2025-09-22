@@ -11,6 +11,24 @@ export default {
             showDemoModal: false,
             demoInput: '',
 
+            revolutionaryTabs: [
+                {
+                    name: 'dataurl',
+                    label: 'Auto Data Fetching',
+                    icon: '⚡'
+                },
+                {
+                    name: 'forms',
+                    label: 'Smart Forms',
+                    icon: '📝'
+                },
+                {
+                    name: 'dynamic',
+                    label: 'Dynamic Includes',
+                    icon: '🔄'
+                }
+            ],
+
             philosophies: [
                 {
                     title: 'View-Logic Separation',

@@ -394,6 +394,26 @@ body {
 /* Mobile Toggle - Hidden by default */
 .nav-toggle {
     display: none;
+    position: relative;
+    z-index: 1001;
+}
+
+/* Mobile Sidebar Overlay */
+.nav-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.nav-overlay.active {
+    opacity: 1;
 }
 
 /* Mobile Responsive */
@@ -406,6 +426,7 @@ body {
         border: none;
         cursor: pointer;
         padding: var(--space-sm);
+        order: -1; /* Place hamburger on the left */
     }
     
     .nav-toggle-bar {
@@ -419,45 +440,75 @@ body {
     .nav-toggle.active .nav-toggle-bar:nth-child(1) {
         transform: rotate(45deg) translate(6px, 6px);
     }
-    
+
     .nav-toggle.active .nav-toggle-bar:nth-child(2) {
         opacity: 0;
     }
-    
+
     .nav-toggle.active .nav-toggle-bar:nth-child(3) {
         transform: rotate(-45deg) translate(6px, -6px);
     }
+
+    /* Prevent body scroll when menu is open */
+    body.nav-menu-open {
+        overflow: hidden;
+    }
     
+    /* Show overlay when menu is active */
+    .nav-overlay {
+        display: block;
+    }
+
+    /* Left sliding sidebar menu */
     .nav-menu {
         position: fixed;
-        top: var(--nav-height);
+        top: 0;
         left: 0;
-        right: 0;
+        width: 280px;
+        height: 100%;
         background: var(--color-white);
-        border-top: var(--border-width) solid var(--color-border);
-        box-shadow: var(--shadow-md);
-        transform: translateY(-100%);
-        opacity: 0;
-        visibility: hidden;
-        transition: all var(--transition-base);
-    }
-    
-    .nav-menu.active {
-        transform: translateY(0);
+        box-shadow: var(--shadow-lg);
+        transform: translateX(-100%);
         opacity: 1;
         visibility: visible;
+        transition: transform var(--transition-base);
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    .nav-menu.active {
+        transform: translateX(0);
     }
     
+    /* Sidebar header */
+    .nav-menu::before {
+        content: '';
+        display: block;
+        height: var(--nav-height);
+        background: var(--color-primary);
+        margin-bottom: var(--space-lg);
+    }
+
     .nav-links {
         flex-direction: column;
-        padding: var(--space-lg);
-        gap: var(--space-sm);
+        padding: 0 var(--space-lg) var(--space-lg);
+        gap: var(--space-xs);
     }
-    
+
     .nav-links a {
         display: block;
         padding: var(--space-md);
         border-radius: var(--border-radius-md);
+        border-left: 3px solid transparent;
+        transition: all var(--transition-base);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+        background: var(--color-primary-light);
+        color: var(--color-primary);
+        border-left-color: var(--color-primary);
+        transform: translateX(4px);
     }
     
     /* Mobile dropdown adjustments */
@@ -467,52 +518,78 @@ body {
         visibility: visible;
         transform: none;
         box-shadow: none;
-        background: transparent;
-        padding-left: var(--space-lg);
-        margin-top: 0;
-    }
-    
-    .nav-links .dropdown-toggle::after {
-        display: none;
-    }
-    
-    .nav-links .dropdown-menu a {
-        padding-left: var(--space-xl);
-        font-size: var(--font-size-sm);
-    }
-    
-    .nav-auth {
-        position: fixed;
-        top: var(--nav-height);
-        right: var(--space-lg);
-        background: var(--color-white);
-        padding: var(--space-md);
+        background: var(--color-light);
+        padding: var(--space-sm) 0;
+        margin: var(--space-xs) 0;
         border-radius: var(--border-radius-md);
-        box-shadow: var(--shadow-md);
-        border: var(--border-width) solid var(--color-border);
-        transform: translateY(-100%);
-        opacity: 0;
-        visibility: hidden;
-        transition: all var(--transition-base);
-        min-width: 150px;
+    }
+
+    .nav-links .dropdown-toggle::after {
+        margin-left: auto;
+        transform: rotate(90deg);
+    }
+
+    .nav-links .has-dropdown.active .dropdown-toggle::after {
+        transform: rotate(-90deg);
+    }
+
+    .nav-links .dropdown-menu a {
+        padding: var(--space-sm) var(--space-xl);
+        font-size: var(--font-size-sm);
+        color: var(--color-text-muted);
+    }
+
+    .nav-links .dropdown-menu a:hover,
+    .nav-links .dropdown-menu a.active {
+        background: var(--color-white);
+        color: var(--color-primary);
+        border-left-color: transparent;
+        transform: none;
     }
     
-    .nav-auth.active {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
+    /* Auth section in sidebar */
+    .nav-auth {
+        border-top: var(--border-width) solid var(--color-border);
+        padding: var(--space-lg);
+        margin-top: auto;
     }
-    
+
     .nav-auth .auth-link {
         display: block;
         margin: var(--space-xs) 0;
-        text-align: center;
+        text-align: left;
+        padding: var(--space-sm) var(--space-md);
+        border-radius: var(--border-radius-md);
+        transition: all var(--transition-base);
     }
-    
-    .nav-auth .auth-divider {
-        display: block;
+
+    .nav-auth .auth-link:hover {
+        background: var(--color-light);
+    }
+
+    .nav-auth .signup-link {
+        background: var(--color-primary);
+        color: var(--color-white);
         text-align: center;
-        margin: var(--space-sm) 0;
+        margin-top: var(--space-md);
+    }
+
+    .nav-auth .signup-link:hover {
+        background: var(--color-primary-hover);
+    }
+
+    .nav-auth .auth-divider {
+        display: none;
+    }
+
+    /* Ensure nav container adjusts for mobile hamburger position */
+    .nav-container {
+        flex-direction: row;
+    }
+
+    .nav-brand {
+        order: 0;
+        margin-left: var(--space-sm);
     }
 }
 

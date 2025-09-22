@@ -94,23 +94,13 @@
                 <p>Groundbreaking components that revolutionize how you handle dynamic content</p>
             </div>
 
-            <Tabs v-model="activeTab" variant="pills" class="revolutionary-tabs">
-                <template #tabs>
-                    <div class="tab" data-tab="dataurl">
-                        <span class="tab-icon">⚡</span>
-                        <span class="tab-label">Auto Data Fetching</span>
-                    </div>
-                    <div class="tab" data-tab="forms">
-                        <span class="tab-icon">📝</span>
-                        <span class="tab-label">Smart Forms</span>
-                    </div>
-                    <div class="tab" data-tab="dynamic">
-                        <span class="tab-icon">🔄</span>
-                        <span class="tab-label">Dynamic Includes</span>
-                    </div>
-                </template>
-
-                <div class="tab-panel" data-panel="dataurl">
+            <Tabs
+                v-model="activeTab"
+                :tabs="revolutionaryTabs"
+                variant="pills"
+                class="revolutionary-tabs"
+            >
+                <template #dataurl>
                     <div class="feature-showcase">
                         <div class="showcase-content">
                             <h3>Automatic Data Fetching with dataURL</h3>
@@ -147,9 +137,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </template>
 
-                <div class="tab-panel" data-panel="forms">
+                <template #forms>
                     <div class="feature-showcase">
                         <div class="showcase-content">
                             <h3>Automatic Form Handling with Variable Parameters</h3>
@@ -180,9 +170,9 @@ export default {
                             </div>
                         </div>
                     </div>
-                </div>
+                </template>
 
-                <div class="tab-panel" data-panel="dynamic">
+                <template #dynamic>
                     <div class="feature-showcase">
                         <div class="showcase-content">
                             <h3>DynamicInclude & HtmlInclude Components</h3>
@@ -209,7 +199,7 @@ export default {
                             </div>
                         </div>
                     </div>
-                </div>
+                </template>
             </Tabs>
         </div>
     </div>

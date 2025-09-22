@@ -1,36 +1,4 @@
-<header>
-    <nav class="main-nav">
-        <div class="nav-container">
-            <!-- Site Logo -->
-            <div class="nav-brand">
-                <a @click="navigateTo('home')" class="brand-link">
-                    <span class="brand-logo">🚀</span>
-                    <span class="brand-text">ViewLogic</span>
-                </a>
-            </div>
-
-            <!-- Mobile Hamburger Menu Button -->
-            <button class="nav-toggle">
-                <span class="nav-toggle-bar"></span>
-                <span class="nav-toggle-bar"></span>
-                <span class="nav-toggle-bar"></span>
-            </button>
-
-            <!-- Central Navigation Menu -->
-            <div class="nav-menu">
-                <ul class="nav-links">
-                    <li><a @click="navigateTo('home')" :class="{ active: currentRoute === 'home' }">Home</a></li>
-                    <li><a @click="navigateTo('components')" :class="{ active: currentRoute === 'components' }">Components</a></li>
-                    <li><a @click="navigateTo('contact')" :class="{ active: currentRoute === 'contact' }">Contact</a></li>
-                </ul>
-            </div>
-
-            <!-- Right Utility Menu -->
-            <div class="nav-utils">
-            </div>
-        </div>
-    </nav>
-</header>
+<Navigation />
 
 <main class="main-content">
     <div class="container">
