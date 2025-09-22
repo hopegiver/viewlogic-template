@@ -1,7 +1,7 @@
 {
   "name": "viewlogic-template",
   "version": "1.0.1",
-  "description": "ViewLogic template with Vue 3 components, custom routing, and build system",
+  "description": "ViewLogic template with Vue 3 components, custom routing, and build system. See CLAUDE.md for development guidelines.",
   "main": "index.html",
   "type": "module",
   "scripts": {
