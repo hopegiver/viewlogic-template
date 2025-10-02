@@ -39,7 +39,6 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "devDependencies": {},
   "files": [
     "src/",
     "css/",
@@ -49,6 +48,7 @@
     "build-worker.cjs"
   ],
   "dependencies": {
-    "viewlogic": "*"
+    "viewlogic": "*",
+    "vue": "3.5.22"
   }
 }
