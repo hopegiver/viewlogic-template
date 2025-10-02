@@ -166,8 +166,8 @@ export default {
                         this.currentLanguage = languageCode;
                         
                         // Update query parameters
-                        if (this.useQueryParam && window.router) {
-                            window.router.setQueryParams({ lang: languageCode });
+                        if (this.useQueryParam && this.$router) {
+                            this.$router.setQueryParams({ lang: languageCode });
                         }
                         
                         this.$emit('language-changed', {

@@ -80,8 +80,8 @@ export default {
             }
             
             // Use router's resolvePath if available
-            if (window.router && typeof window.router.resolvePath === 'function') {
-                return window.router.resolvePath(path);
+            if (this.$router && typeof this.$router.resolvePath === 'function') {
+                return this.$router.resolvePath(path);
             }
             
             // Fallback: basic URL resolution

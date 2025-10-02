@@ -49,66 +49,44 @@ export default {
     methods: {
         async loadPage() {
             if (!this.page) return;
-            
-            // Prevent duplicate loading
+
+            // 중복 로딩 방지
             if (this.loading) return;
-            
+
             this.loading = true;
             this.error = false;
-            this.loadingStartTime = Date.now();
-            
+
             try {
-                // Check router status
-                if (!window.router) {
-                    throw new Error('Router not initialized');
+                // $createComponent 함수 사용 가능성 검사
+                if (!this.$router.createComponent || typeof this.$router.createComponent !== 'function') {
+                    throw new Error('$createComponent function not available');
                 }
-                
-                // Wait for router to be ready (with timeout)
-                if (!window.router?.routeLoader) {
-                    await new Promise((resolve, reject) => {
-                        let attempts = 0;
-                        const maxAttempts = 100; // 5 second timeout
-                        
-                        const check = () => {
-                            attempts++;
-                            if (window.router?.routeLoader) {
-                                resolve();
-                            } else if (attempts >= maxAttempts) {
-                                reject(new Error('Router timeout: RouteLoader not ready'));
-                            } else {
-                                setTimeout(check, 50);
-                            }
-                        };
-                        check();
-                    });
-                }
-                
-                // Validate page name
+
+                // 페이지 이름 유효성 검사
                 if (!this.page || typeof this.page !== 'string' || this.page.trim() === '') {
                     throw new Error('Invalid page name provided');
                 }
-                
-                // Load component (with additional error handling)
-                const component = await window.router.routeLoader.createVueComponent(this.page.trim());
-                
-                // Apply styles in development mode
+
+                // 컴포넌트 로드 ($createComponent 사용)
+                const component = await this.$router.createComponent(this.page.trim());
+
+                // 개발 모드에서 스타일 적용
                 if (component._style) {
                     this.applyStyle(component._style, `dynamic-${this.page}`);
                 }
-                
+
                 this.dynamicComponent = Vue.markRaw(component);
-                
+
             } catch (err) {
-                // Simple error logging (non-breaking for router)
+                // 간단한 에러 로깅 (라우터 비중단)
                 console.warn(`DynamicInclude: Failed to load '${this.page}':`, err.message);
-                
-                // Set error state
+
+                // 에러 상태 설정
                 this.error = true;
-                this.errorMessage = err.message || `Cannot load page '${this.page}'`;
+                this.errorMessage = err.message || `'${this.page}' 페이지를 로드할 수 없습니다`;
                 this.dynamicComponent = null;
             } finally {
                 this.loading = false;
-                this.loadingStartTime = null;
             }
         },
         

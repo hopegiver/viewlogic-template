@@ -19,7 +19,7 @@ export default {
 
     computed: {
         activeRoute() {
-            return window.router.getCurrentRoute() || 'home';
+            return this.$router.getCurrentRoute() || 'home';
         }
     },
 

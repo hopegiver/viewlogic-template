@@ -2756,6 +2756,10 @@ var ViewLogicRouter = class {
   async renderComponentWithTransition(vueComponent, routeName) {
     const appElement = document.getElementById("app");
     if (!appElement) return;
+
+    // 라우트 이동 시 스크롤을 맨 위로 이동
+    window.scrollTo(0, 0);
+
     const newPageContainer = document.createElement("div");
     newPageContainer.className = "page-container page-entered";
     newPageContainer.id = `page-${routeName}-${Date.now()}`;

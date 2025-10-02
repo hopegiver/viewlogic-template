@@ -92,6 +92,8 @@
 /* Section Styles */
 .philosophy-section,
 .features-section,
+.services-section,
+.process-section,
 .revolutionary-section,
 .performance-section,
 .getting-started-section {
@@ -104,6 +106,14 @@
 
 .features-section {
     background: white;
+}
+
+.services-section {
+    background: white;
+}
+
+.process-section {
+    background: #f8f9fa;
 }
 
 .revolutionary-section {
@@ -223,6 +233,71 @@
 }
 
 .feature-description {
+    color: #6c757d;
+    line-height: 1.6;
+}
+
+/* Process Section */
+.process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+}
+
+.step-item {
+    text-align: center;
+    padding: 40px 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid #e9ecef;
+    position: relative;
+}
+
+.step-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 123, 255, 0.15);
+    border-color: #007bff;
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 auto 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.step-number::before {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 123, 255, 0.1);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+}
+
+.step-item h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.step-item p {
     color: #6c757d;
     line-height: 1.6;
 }
@@ -497,10 +572,21 @@
 
     .philosophy-section,
     .features-section,
+    .services-section,
+    .process-section,
     .revolutionary-section,
     .performance-section,
     .getting-started-section {
         padding: 60px 0;
+    }
+
+    .process-steps {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .step-item {
+        padding: 30px 20px;
     }
 
     .feature-showcase {
