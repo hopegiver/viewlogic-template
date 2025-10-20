@@ -218,28 +218,10 @@ project/
 
 #### Medium/Large Project (Nested Structure)
 
-1. **Plan the module structure**
-   ```
-   Feature: Admin User Management Module
-   - Views:
-     - src/views/admin/users/list.html       (User list page)
-     - src/views/admin/users/edit.html       (User edit page)
-     - src/views/admin/users/create.html     (User create page)
-   - Logic:
-     - src/logic/admin/users/list.js
-     - src/logic/admin/users/edit.js
-     - src/logic/admin/users/create.js
-   - Styles (optional):
-     - src/styles/admin/users/list.css       (if unique styles needed)
-     - src/styles/admin/users/edit.css
-   - Global Components (if truly reusable across ALL modules):
-     - src/components/UserForm.js            (Used by multiple modules)
-     - src/components/DataTable.js           (Used globally)
-   ```
+1. **Plan the module structure**: See [Project Structure](#project-structure) for detailed folder organization
 
 2. **Create folder structure first**
    ```bash
-   # Create directories
    mkdir -p src/views/admin/users
    mkdir -p src/logic/admin/users
    mkdir -p src/styles/admin/users  # Optional
@@ -249,21 +231,6 @@ project/
    - Start with Logic (define data structure)
    - Then View (use the data)
    - Finally Style (if needed)
-
-4. **Organize by feature modules**
-   ```
-   Good module organization:
-   - admin/         (Admin module)
-     - users/       (User management sub-module)
-     - settings/    (Settings sub-module)
-     - reports/     (Reports sub-module)
-   - user/          (User-facing module)
-     - profile/     (Profile sub-module)
-     - posts/       (Posts sub-module)
-   - shop/          (Shop module)
-     - products/    (Products sub-module)
-     - checkout/    (Checkout sub-module)
-   ```
 
 ### Choosing Structure: Flat vs Nested
 
@@ -414,33 +381,13 @@ body { font-family: system-ui; }
 ### CSS Best Practices
 
 ```css
-/* ✅ GOOD: Semantic class names */
-.user-profile-header { }
-.dashboard-stats-card { }
+/* ✅ GOOD: Semantic names, CSS variables, mobile-first */
+.user-profile-header { color: var(--primary-color); }
+.card { width: 100%; }
+@media (min-width: 768px) { .card { width: 50%; } }
 
-/* ❌ BAD: Generic or meaningless names */
-.box1 { }
-.wrapper { }
-
-/* ✅ GOOD: Use CSS variables */
-color: var(--primary-color);
-
-/* ❌ BAD: Hardcoded values everywhere */
-color: #3b82f6;
-
-/* ✅ GOOD: Mobile-first responsive */
-.card {
-    width: 100%;
-}
-@media (min-width: 768px) {
-    .card { width: 50%; }
-}
-
-/* ❌ BAD: Desktop-first */
-.card { width: 50%; }
-@media (max-width: 768px) {
-    .card { width: 100%; }
-}
+/* ❌ BAD: Generic names, hardcoded values, desktop-first */
+.box1 { color: #3b82f6; }
 ```
 
 ### Style Removal Checklist
@@ -712,35 +659,19 @@ Views are **pure presentation** with Vue template syntax:
 ### Template Best Practices
 
 ```html
-<!-- ✅ GOOD: Use components for reusable UI -->
+<!-- ✅ GOOD: Use components -->
 <UserCard :user="user" @edit="handleEdit" />
 
-<!-- ❌ BAD: Inline complex markup -->
-<div class="user-card">
-    <img :src="user.avatar">
-    <h3>{{ user.name }}</h3>
-    <!-- ... repeated in multiple places ... -->
-</div>
+<!-- ❌ BAD: Repeat complex markup -->
+<div class="user-card"><img :src="user.avatar">...</div>
 
-<!-- ✅ GOOD: Clear conditional logic -->
+<!-- ✅ GOOD: Clear conditions -->
 <div v-if="isLoading">Loading...</div>
-<div v-else-if="hasError">Error occurred</div>
+<div v-else-if="hasError">Error</div>
 <div v-else>{{ content }}</div>
 
-<!-- ❌ BAD: Complex nested conditions -->
-<div v-if="!isLoading && !hasError && hasData">...</div>
-
-<!-- ✅ GOOD: Semantic class names -->
-<div class="user-profile-stats">
-
-<!-- ❌ BAD: Generic class names -->
-<div class="box stats">
-
-<!-- ✅ GOOD: Use v-for with :key -->
+<!-- ✅ GOOD: v-for with :key -->
 <div v-for="item in items" :key="item.id">
-
-<!-- ❌ BAD: v-for without :key -->
-<div v-for="item in items">
 ```
 
 ### Layout Integration
@@ -1061,35 +992,9 @@ export default {
 };
 ```
 
-#### Pattern 3: Conditional Content Loading
-
-```html
-<!-- src/views/admin/panel.html -->
-<div class="admin-panel">
-    <h1>Admin Panel</h1>
-
-    <!-- Load different panels based on user role -->
-    <DynamicInclude
-        v-if="userRole === 'superadmin'"
-        page="admin/super-panel"
-    />
-    <DynamicInclude
-        v-else-if="userRole === 'admin'"
-        page="admin/standard-panel"
-    />
-
-    <!-- Static help content -->
-    <aside class="help">
-        <HtmlInclude src="/help/admin-guide.html" />
-    </aside>
-</div>
-```
-
 ---
 
 ### Best Practices
-
-#### ✅ DO
 
 ```html
 <!-- ✅ GOOD: Use DynamicInclude for routes with logic -->
@@ -1098,85 +1003,19 @@ export default {
 <!-- ✅ GOOD: Use HtmlInclude for static content -->
 <HtmlInclude src="/templates/footer.html" />
 
-<!-- ✅ GOOD: Bind page prop for dynamic routing -->
-<DynamicInclude :page="`widgets/${selectedWidget}`" />
-
-<!-- ✅ GOOD: Organize widget routes in dedicated folder -->
-src/views/widgets/
-├── user-stats.html
-├── sales-chart.html
-└── activity-feed.html
-```
-
-#### ❌ DON'T
-
-```html
 <!-- ❌ BAD: Don't use DynamicInclude for static HTML -->
-<DynamicInclude page="static-footer" />
-<!-- Use HtmlInclude instead -->
+<DynamicInclude page="static-footer" />  <!-- Use HtmlInclude -->
 
 <!-- ❌ BAD: Don't use HtmlInclude for interactive content -->
-<HtmlInclude src="/widgets/user-form.html" />
-<!-- Won't work - no Vue reactivity -->
-
-<!-- ❌ BAD: Don't nest DynamicInclude deeply -->
-<!-- Page A includes Page B includes Page C includes Page D -->
-<!-- This creates complex dependency chains -->
-
-<!-- ❌ BAD: Don't use for entire pages -->
-<DynamicInclude page="home" />
-<!-- Use navigateTo() instead for full page navigation -->
+<HtmlInclude src="/widgets/user-form.html" />  <!-- No Vue reactivity -->
 ```
 
 ---
 
-### Error Handling
+### Performance Tips
 
-Both components handle errors gracefully:
-
-```html
-<!-- DynamicInclude shows error message if route fails to load -->
-<DynamicInclude page="non-existent-route" />
-<!-- Shows: "Failed to load 'non-existent-route'" -->
-
-<!-- HtmlInclude shows error if file not found -->
-<HtmlInclude src="/missing-file.html" />
-<!-- Shows: "Cannot load file '/missing-file.html'" -->
-```
-
-**Custom error handling**:
-
-```html
-<!-- Use wrapper to add custom error UI -->
-<div class="widget-container">
-    <DynamicInclude page="widgets/stats" />
-</div>
-```
-
-```css
-/* Style error messages */
-.dynamic-include .error-message {
-    color: red;
-    padding: 1rem;
-    border: 1px solid red;
-}
-```
-
----
-
-### Performance Considerations
-
-**DynamicInclude**:
-- ⚠️ Each included route loads separately (view + logic + styles)
-- ⚠️ Multiple includes = multiple HTTP requests in dev mode
-- ✅ In production, routes are bundled and cached
-- 💡 **Tip**: Limit to 3-5 dynamic includes per page
-
-**HtmlInclude**:
-- ✅ Lightweight (just HTML)
-- ✅ Can be cached by browser
-- ⚠️ Each include = separate HTTP request
-- 💡 **Tip**: Use for truly static content only
+- **DynamicInclude**: Limit to 3-5 per page (loads full component)
+- **HtmlInclude**: Lightweight, cache-friendly (static HTML only)
 
 ---
 
@@ -1245,34 +1084,20 @@ export default {
 ### Component Best Practices
 
 ```javascript
-// ✅ GOOD: Clear prop definitions with validation
+// ✅ GOOD: Clear prop definitions
 props: {
-    userId: {
-        type: [String, Number],
-        required: true
-    },
-    showActions: {
-        type: Boolean,
-        default: false
-    }
+    userId: { type: [String, Number], required: true },
+    showActions: { type: Boolean, default: false }
 }
 
-// ❌ BAD: Minimal prop definitions
+// ❌ BAD: Minimal definitions
 props: ['userId', 'showActions']
 
-// ✅ GOOD: Document emitted events
+// ✅ GOOD: Document emits
 emits: ['update', 'delete', 'select']
 
-// ❌ BAD: No emit declarations
-// Just using this.$emit('update') without declaration
-
-// ✅ GOOD: Reusable, single-purpose components
-// UserAvatar.js - displays user avatar only
-// UserCard.js - displays user summary card
-// UserList.js - displays list of users
-
-// ❌ BAD: Monolithic components
-// UserEverything.js - does everything related to users
+// ✅ GOOD: Single-purpose components (UserCard.js, UserAvatar.js)
+// ❌ BAD: Monolithic components (UserEverything.js)
 ```
 
 ### When to Create a Component
