@@ -14,6 +14,7 @@
 - [API Integration](#api-integration)
 - [State Management](#state-management)
 - [Routing and Navigation](#routing-and-navigation)
+- [SEO Strategy](#seo-strategy)
 - [Forms and Data Handling](#forms-and-data-handling)
 - [Internationalization](#internationalization)
 - [Quality Assurance](#quality-assurance)
@@ -52,6 +53,33 @@ ViewLogic provides built-in functionality for:
 - **i18n**: Multi-language support with lazy loading
 - **Form Handling**: Automatic form processing with validation
 - **Caching**: Smart caching with TTL and LRU eviction
+
+### Routing Philosophy
+
+ViewLogic uses **file-based routing without routing tables** for superior performance and simplicity:
+
+**Why File-Based Routing?**
+- **O(1) Performance**: Direct file-to-route mapping eliminates routing table lookups (O(n))
+- **Zero Configuration**: No routing table to maintain or configure
+- **100% Dynamic**: Routes discovered automatically from file structure
+- **Proven at Scale**: Validated on large production applications
+
+**Why Query Parameters Over Path Parameters?**
+
+ViewLogic uses query parameters (`#/user-profile?userId=123`) instead of path parameters (`#/user-profile/123`):
+
+- **SEO Friendly**: Query parameters work perfectly with SEO when using prerendering (YouTube, Amazon, etc.)
+- **100% Dynamic Routing**: No routing table configuration required
+- **Flexibility**: Easy to add/modify parameters without route changes
+- **Backward Compatibility**: Legacy systems prove this approach scales well
+
+**Performance Benefits**:
+```
+Traditional Routing Table: O(n) - Must search through all routes
+File-Based Routing: O(1) - Direct file system lookup
+```
+
+This design enables fast, lightweight operation even on large-scale applications.
 
 ---
 
@@ -1535,6 +1563,246 @@ ViewLogicRouter({
     publicRoutes: ['login', 'register', 'home']
 });
 ```
+
+---
+
+## SEO Strategy
+
+ViewLogic's query-based routing is **fully SEO-friendly** when combined with prerendering solutions. This approach is proven by major platforms like YouTube and Amazon.
+
+### Prerendering for Public-Facing Sites
+
+For public-facing websites that require SEO, use external prerendering solutions:
+
+**Recommended Solutions**:
+1. **Prerender.io** - Cloud-based prerendering service
+2. **Puppeteer** - Self-hosted prerendering with headless Chrome
+3. **Rendertron** - Google's prerendering solution
+4. **Prerender SPA Plugin** - Webpack plugin for static prerendering
+
+### How Prerendering Works
+
+Prerendering generates static HTML snapshots of your SPA for search engine crawlers:
+
+```
+1. User/Bot requests: https://yoursite.com/#/user/profile?userId=123
+2. Server detects bot (via User-Agent)
+3. Server sends request to prerendering service
+4. Prerendering service:
+   - Loads page in headless browser
+   - Executes JavaScript
+   - Waits for content to load
+   - Returns rendered HTML snapshot
+5. Server returns HTML snapshot to bot
+6. Search engine indexes the rendered content
+```
+
+### Implementation Example: Prerender.io
+
+**1. Sign up for Prerender.io** and get your token
+
+**2. Configure your web server** (Nginx example):
+
+```nginx
+server {
+    listen 80;
+    server_name yoursite.com;
+
+    location / {
+        # Detect bot traffic
+        if ($http_user_agent ~* "googlebot|bingbot|yandex|baiduspider|twitterbot|facebookexternalhit|rogerbot|linkedinbot|embedly|quora link preview|showyoubot|outbrain|pinterest|slackbot|vkShare|W3C_Validator") {
+            # Proxy to Prerender.io
+            proxy_pass https://service.prerender.io;
+            proxy_set_header X-Prerender-Token YOUR_TOKEN;
+            rewrite .* /$scheme://$host$request_uri? break;
+        }
+
+        # Serve SPA for regular users
+        try_files $uri $uri/ /index.html;
+    }
+}
+```
+
+**3. Add meta tags** for social sharing:
+
+```html
+<!-- index.html -->
+<head>
+    <meta name="description" content="Your app description">
+    <meta property="og:title" content="Your App Title">
+    <meta property="og:description" content="Your app description">
+    <meta property="og:image" content="https://yoursite.com/og-image.jpg">
+    <meta property="og:url" content="https://yoursite.com">
+    <meta name="twitter:card" content="summary_large_image">
+</head>
+```
+
+### Self-Hosted Prerendering with Puppeteer
+
+For complete control, implement your own prerendering:
+
+```javascript
+// prerender-server.js
+const express = require('express');
+const puppeteer = require('puppeteer');
+
+const app = express();
+const PORT = 3000;
+
+let browser;
+
+(async () => {
+    browser = await puppeteer.launch({ headless: true });
+})();
+
+app.get('/render', async (req, res) => {
+    const url = req.query.url;
+
+    if (!url) {
+        return res.status(400).send('URL parameter required');
+    }
+
+    try {
+        const page = await browser.newPage();
+        await page.goto(url, { waitUntil: 'networkidle0' });
+        const html = await page.content();
+        await page.close();
+
+        res.send(html);
+    } catch (error) {
+        console.error('Prerender error:', error);
+        res.status(500).send('Prerendering failed');
+    }
+});
+
+app.listen(PORT, () => {
+    console.log(`Prerender server running on port ${PORT}`);
+});
+```
+
+**Nginx configuration for self-hosted**:
+
+```nginx
+location / {
+    # Detect bot traffic
+    if ($http_user_agent ~* "bot|crawler|spider") {
+        proxy_pass http://localhost:3000/render?url=$scheme://$host$request_uri;
+    }
+
+    # Serve SPA for regular users
+    try_files $uri $uri/ /index.html;
+}
+```
+
+### URL Rewriting for Clean URLs (Optional)
+
+If you need clean URLs for marketing/branding, use CDN/Nginx rewriting:
+
+```nginx
+# Rewrite clean URLs to query parameters
+location ~ ^/user/profile/([0-9]+)$ {
+    rewrite ^/user/profile/([0-9]+)$ /#/user/profile?userId=$1 permanent;
+}
+
+location ~ ^/blog/post/([a-zA-Z0-9-]+)$ {
+    rewrite ^/blog/post/([a-zA-Z0-9-]+)$ /#/blog/post?slug=$1 permanent;
+}
+```
+
+### SEO Best Practices with ViewLogic
+
+**1. Use Meaningful Route Names**
+```javascript
+// ✅ GOOD: Descriptive route names
+src/views/user/profile.html    → #/user/profile?userId=123
+src/views/blog/post.html       → #/blog/post?slug=seo-guide
+
+// ❌ BAD: Generic names
+src/views/view1.html           → #/view1?id=123
+```
+
+**2. Include Meta Tags in Layouts**
+```html
+<!-- src/layouts/default.html -->
+<head>
+    <title>{{ pageTitle || 'ViewLogic App' }}</title>
+    <meta name="description" :content="pageDescription || 'Default description'">
+    <meta property="og:title" :content="pageTitle">
+    <meta property="og:description" :content="pageDescription">
+</head>
+```
+
+**3. Update Meta Tags Dynamically**
+```javascript
+// src/logic/blog/post.js
+export default {
+    dataURL: '/api/posts/{slug}',
+
+    mounted() {
+        // Update meta tags for SEO
+        document.title = `${this.post.title} | Your Blog`;
+
+        const description = document.querySelector('meta[name="description"]');
+        if (description) {
+            description.setAttribute('content', this.post.excerpt);
+        }
+
+        const ogTitle = document.querySelector('meta[property="og:title"]');
+        if (ogTitle) {
+            ogTitle.setAttribute('content', this.post.title);
+        }
+    }
+};
+```
+
+**4. Implement Structured Data**
+```javascript
+// src/logic/product/detail.js
+export default {
+    mounted() {
+        // Add JSON-LD structured data
+        const structuredData = {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": this.product.name,
+            "description": this.product.description,
+            "image": this.product.image,
+            "offers": {
+                "@type": "Offer",
+                "price": this.product.price,
+                "priceCurrency": "USD"
+            }
+        };
+
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify(structuredData);
+        document.head.appendChild(script);
+    }
+};
+```
+
+### When to Use Prerendering
+
+**Use Prerendering for**:
+- ✅ Public-facing websites (blogs, e-commerce, marketing sites)
+- ✅ Content that needs to be indexed by search engines
+- ✅ Social media sharing (Open Graph, Twitter Cards)
+- ✅ Sites requiring high SEO performance
+
+**Don't Need Prerendering for**:
+- ❌ Admin panels (no SEO requirements)
+- ❌ Internal tools (behind authentication)
+- ❌ Private dashboards (not public-facing)
+- ❌ Developer tools (no search engine indexing needed)
+
+### Performance Impact
+
+Prerendering does **not** impact regular user experience:
+- Regular users: Get SPA with instant navigation (no prerendering overhead)
+- Search bots: Get prerendered HTML (slower but indexed correctly)
+
+This approach gives you the best of both worlds: fast SPA for users + great SEO for bots.
 
 ---
 
