@@ -1,11 +1,13 @@
 # ViewLogic Template
 
-> ViewLogic application template with zero build development
+Simple starter template with Bootstrap 5 and ViewLogic router.
 
 ## Quick Start
 
+Just open `index.html` in a browser, or use any static server:
+
 ```bash
-npm run dev
+python -m http.server 8000
 # Open http://localhost:8000
 ```
 
@@ -13,63 +15,23 @@ npm run dev
 
 ```
 src/
-├── views/          # HTML templates
-├── logic/          # JavaScript logic
-├── components/     # Global components
-└── layouts/        # Layout templates
-
-css/
-└── base.css        # Global styles
-i18n/               # Translations
+├── views/       # HTML templates
+├── logic/       # JavaScript logic
+├── components/  # Reusable components
+└── layouts/     # Layout templates
 ```
 
 ## Creating a Page
 
-**1. View** (`src/views/hello.html`):
-```html
-<div class="hello-page">
-    <h1>{{ message }}</h1>
-    <Button @click="increment">Count: {{ count }}</Button>
-</div>
-```
+1. Create `src/views/mypage.html`
+2. Create `src/logic/mypage.js`
+3. Navigate to `#/mypage`
 
-**2. Logic** (`src/logic/hello.js`):
-```javascript
-export default {
-    data() {
-        return { message: 'Hello!', count: 0 };
-    },
-    methods: {
-        increment() { this.count++; }
-    }
-};
-```
-
-**3. Navigate to** `#/hello`
-
-## Commands
-
-```bash
-npm run dev          # Development server
-npm run build        # Production build
-npm run build:prod   # Full optimization
-```
+That's it!
 
 ## Documentation
 
-- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Complete development guide (AI-friendly)
-- **[CLAUDE.md](CLAUDE.md)** - Claude Code guidelines
-- **[ViewLogic Docs](https://github.com/hopegiver/viewlogic)** - Framework documentation
-
-## Development Rules
-
-**Before coding, read [CONTRIBUTING.md](CONTRIBUTING.md)!**
-
-Quick rules:
-1. Separate concerns: `views/` (HTML) ≠ `logic/` (JS) ≠ `styles/` (CSS)
-2. Check `css/base.css` before adding styles
-3. Reuse `src/components/` before creating new ones
-4. Follow naming: `views/page.html` → `logic/page.js` → `styles/page.css`
+See [GUIDE.md](GUIDE.md) for detailed documentation.
 
 ## License
 
