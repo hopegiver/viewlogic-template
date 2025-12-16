@@ -1,37 +1,84 @@
 <header>
-    <DynamicInclude page="navigation" />
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container-fluid px-3 px-lg-4">
+            <!-- Brand Logo -->
+            <a class="navbar-brand d-flex align-items-center" @click="navigateTo('home')" role="button">
+                <span class="fs-3 me-2">🚀</span>
+                <span class="fw-bold fs-5">ViewLogic</span>
+            </a>
+
+            <!-- Mobile Toggle Button -->
+            <button
+                class="navbar-toggler border-0"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navigation Menu -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-2" @click="navigateTo('home')" role="button">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-2" @click="navigateTo('about')" role="button">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-2" @click="navigateTo('contact')" role="button">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </header>
 
 <main class="main-content">
-    <div class="container">
-        <!-- Page content will be inserted here -->
-        {{ content }}
-    </div>
+    <!-- Page content will be inserted here -->
+    {{ content }}
 </main>
 
-<footer class="page-footer">
+<footer class="bg-dark text-white py-5 mt-auto">
     <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Company</h4>
-                <p>About Us</p>
-                <p>Contact</p>
-                <p>Privacy Policy</p>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <h5 class="fw-bold mb-3">Company</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">About Us</a></li>
+                    <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                    <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Privacy Policy</a></li>
+                </ul>
             </div>
-            <div class="footer-section">
-                <h4>Services</h4>
-                <p>Web Development</p>
-                <p>Design</p>
-                <p>Consulting</p>
+            <div class="col-md-4">
+                <h5 class="fw-bold mb-3">Services</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Web Development</a></li>
+                    <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Design</a></li>
+                    <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Consulting</a></li>
+                </ul>
             </div>
-            <div class="footer-section">
-                <h4>Contact Info</h4>
-                <p>Email: info@example.com</p>
-                <p>Phone: (555) 123-4567</p>
+            <div class="col-md-4">
+                <h5 class="fw-bold mb-3">Contact Info</h5>
+                <ul class="list-unstyled text-white-50">
+                    <li class="mb-2">
+                        <i class="bi bi-envelope me-2"></i>
+                        Email: info@example.com
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-telephone me-2"></i>
+                        Phone: (555) 123-4567
+                    </li>
+                </ul>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 My Website. All rights reserved.</p>
+        <hr class="my-4 bg-white opacity-25">
+        <div class="text-center text-white-50">
+            <p class="mb-0">&copy; 2025 My Website. All rights reserved.</p>
         </div>
     </div>
 </footer>

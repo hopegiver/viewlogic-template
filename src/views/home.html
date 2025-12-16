@@ -1,54 +1,62 @@
 <div class="home-page">
     <!-- Hero Section -->
-    <div class="hero-section">
+    <section class="hero-section bg-primary text-white py-5">
         <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">{{ heroTitle }}</h1>
-                <p class="hero-subtitle">{{ heroSubtitle }}</p>
-                <div class="hero-actions">
-                    <button class="btn btn-primary btn-large" @click="navigateTo('contact')">
-                        Get Started
-                    </button>
-                    <button class="btn btn-outline btn-large" @click="navigateTo('components')">
-                        Learn More
-                    </button>
+            <div class="row align-items-center min-vh-50">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-3 fw-bold mb-4">{{ heroTitle }}</h1>
+                    <p class="lead fs-4 mb-5">{{ heroSubtitle }}</p>
+                    <div class="d-flex gap-3 justify-content-center flex-wrap">
+                        <button class="btn btn-light btn-lg px-5" @click="navigateTo('contact')">
+                            Get Started
+                        </button>
+                        <button class="btn btn-outline-light btn-lg px-5" @click="navigateTo('about')">
+                            Learn More
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- Features Section -->
-    <div class="features-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Why Choose Us</h2>
-                <p>Simple, powerful, and easy to use</p>
+    <section class="features-section py-5 bg-light">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold mb-3">Why Choose Us</h2>
+                <p class="lead text-muted">Simple, powerful, and easy to use</p>
             </div>
 
-            <div class="features-grid">
+            <div class="row g-4">
                 <div
                     v-for="feature in features"
                     :key="feature.title"
-                    class="feature-item"
+                    class="col-md-6 col-lg-4"
                 >
-                    <div class="feature-icon">{{ feature.icon }}</div>
-                    <h3 class="feature-title">{{ feature.title }}</h3>
-                    <p class="feature-description">{{ feature.description }}</p>
+                    <div class="card h-100 border-0 shadow-sm hover-lift">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon fs-1 mb-3">{{ feature.icon }}</div>
+                            <h3 class="h5 fw-bold mb-3">{{ feature.title }}</h3>
+                            <p class="text-muted mb-0">{{ feature.description }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- Call to Action Section -->
-    <div class="cta-section">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Get Started?</h2>
-                <p>Join thousands of satisfied customers today</p>
-                <button class="btn btn-primary btn-large" @click="navigateTo('contact')">
-                    Contact Us
-                </button>
+    <section class="cta-section bg-primary text-white py-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="display-5 fw-bold mb-3">Ready to Get Started?</h2>
+                    <p class="lead mb-4">Join thousands of satisfied customers today</p>
+                    <button class="btn btn-light btn-lg px-5" @click="navigateTo('contact')">
+                        Contact Us
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 </div>

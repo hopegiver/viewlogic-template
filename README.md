@@ -16,8 +16,8 @@ src/
 ├── views/          # HTML templates
 ├── logic/          # JavaScript logic
 ├── components/     # Global components
-├── layouts/        # Layout templates
-└── styles/         # Page styles
+└── layouts/        # Layout templates
+
 css/
 └── base.css        # Global styles
 i18n/               # Translations

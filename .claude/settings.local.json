@@ -8,7 +8,9 @@
       "Bash(git push:*)",
       "Bash(npm install:*)",
       "Bash(cp:*)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(powershell \"(Get-Content ''g:\\workspace\\viewlogic-template\\CONTRIBUTING.md'').Count\")",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []
