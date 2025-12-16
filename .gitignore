@@ -3,3 +3,9 @@ routes
 .build-cache.json
 bundle-report.html
 .claude
+.vscode
+.DS_Store
+.idea
+dist
+.env
+*.log
