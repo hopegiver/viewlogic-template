@@ -38,12 +38,15 @@ project/
 └── src/
     ├── views/              # HTML 템플릿
     │   ├── home.html
-    │   └── about.html
+    │   ├── about.html
+    │   └── layout/         # 레이아웃 템플릿
+    │       └── default.html
     ├── logic/              # JavaScript 로직
     │   ├── home.js
-    │   └── about.js
-    ├── components/         # 재사용 컴포넌트
-    └── layouts/            # 레이아웃 템플릿
+    │   ├── about.js
+    │   └── layout/         # 레이아웃 스크립트
+    │       └── default.js
+    └── components/         # 재사용 컴포넌트
 ```
 
 ### 3. index.html 설정
@@ -745,7 +748,7 @@ export default {
 
 ### 레이아웃 생성
 
-**src/layouts/default.html**
+**src/views/layout/default.html** (템플릿)
 ```html
 <div class="layout-default">
     <header>
@@ -757,7 +760,7 @@ export default {
     </header>
 
     <main>
-        <slot></slot>  <!-- 페이지 컨텐츠가 여기에 -->
+        {{ content }}  <!-- 페이지 컨텐츠가 여기에 -->
     </main>
 
     <footer>
@@ -766,7 +769,28 @@ export default {
 </div>
 ```
 
-**src/layouts/admin.html**
+**src/logic/layout/default.js** (스크립트, 선택사항)
+```javascript
+export default {
+    name: 'defaultLayout',
+
+    data() {
+        return {
+            // 레이아웃 전역 데이터
+        };
+    },
+
+    mounted() {
+        // 레이아웃 초기화 로직
+    },
+
+    methods: {
+        // 레이아웃 메서드
+    }
+};
+```
+
+**src/views/layout/admin.html**
 ```html
 <div class="layout-admin">
     <aside class="sidebar">
@@ -786,7 +810,7 @@ export default {
 // src/logic/home.js
 export default {
     name: 'Home',
-    layout: 'default',  // layouts/default.html 사용
+    layout: 'default',  // views/layout/default.html 사용
     // ...
 }
 ```
@@ -795,7 +819,7 @@ export default {
 // src/logic/admin/dashboard.js
 export default {
     name: 'AdminDashboard',
-    layout: 'admin',  // layouts/admin.html 사용
+    layout: 'admin',  // views/layout/admin.html 사용
     // ...
 }
 ```
