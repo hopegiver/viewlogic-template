@@ -1,62 +1,246 @@
-<div class="home-page">
-    <!-- Hero Section -->
-    <section class="hero-section bg-primary text-white py-5">
-        <div class="container">
-            <div class="row align-items-center min-vh-50">
-                <div class="col-lg-8 mx-auto text-center">
-                    <h1 class="display-3 fw-bold mb-4">{{ heroTitle }}</h1>
-                    <p class="lead fs-4 mb-5">{{ heroSubtitle }}</p>
-                    <div class="d-flex gap-3 justify-content-center flex-wrap">
-                        <button class="btn btn-light btn-lg px-5" @click="navigateTo('contact')">
-                            Get Started
-                        </button>
-                        <button class="btn btn-outline-light btn-lg px-5" @click="navigateTo('about')">
-                            Learn More
-                        </button>
-                    </div>
-                </div>
-            </div>
+<div class="container-fluid p-4">
+    <!-- 페이지 헤더 -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-1">대시보드</h2>
+            <p class="text-secondary mb-0">전체 현황을 한눈에 확인하세요</p>
         </div>
-    </section>
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-primary" @click="goToUpload">
+                <i class="bi bi-cloud-upload me-1"></i>
+                업로드
+            </button>
+            <button class="btn btn-primary" @click="goToPackage">
+                <i class="bi bi-send me-1"></i>
+                배포 패키지 생성
+            </button>
+        </div>
+    </div>
 
-    <!-- Features Section -->
-    <section class="features-section py-5 bg-light">
-        <div class="container py-5">
-            <div class="text-center mb-5">
-                <h2 class="display-5 fw-bold mb-3">Why Choose Us</h2>
-                <p class="lead text-muted">Simple, powerful, and easy to use</p>
-            </div>
-
-            <div class="row g-4">
-                <div
-                    v-for="feature in features"
-                    :key="feature.title"
-                    class="col-md-6 col-lg-4"
-                >
-                    <div class="card h-100 border-0 shadow-sm hover-lift">
-                        <div class="card-body text-center p-4">
-                            <div class="feature-icon fs-1 mb-3">{{ feature.icon }}</div>
-                            <h3 class="h5 fw-bold mb-3">{{ feature.title }}</h3>
-                            <p class="text-muted mb-0">{{ feature.description }}</p>
+    <!-- 주요 지표 카드 -->
+    <div class="row g-3 mb-4">
+        <!-- 총 동영상 수 -->
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <p class="text-secondary mb-1">총 동영상</p>
+                            <h3 class="mb-0">{{ stats.totalVideos.toLocaleString() }}</h3>
+                            <small :class="getChangeClass(stats.videosChange)">
+                                <i :class="getChangeIcon(stats.videosChange)"></i>
+                                {{ Math.abs(stats.videosChange) }}% 이번 달
+                            </small>
+                        </div>
+                        <div class="stat-icon bg-primary-subtle text-primary rounded-3 p-3">
+                            <i class="bi bi-film fs-4"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Call to Action Section -->
-    <section class="cta-section bg-primary text-white py-5">
-        <div class="container py-5">
-            <div class="row">
-                <div class="col-lg-8 mx-auto text-center">
-                    <h2 class="display-5 fw-bold mb-3">Ready to Get Started?</h2>
-                    <p class="lead mb-4">Join thousands of satisfied customers today</p>
-                    <button class="btn btn-light btn-lg px-5" @click="navigateTo('contact')">
-                        Contact Us
-                    </button>
+        <!-- 스토리지 사용률 -->
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <p class="text-secondary mb-1">스토리지</p>
+                            <h3 class="mb-0">{{ stats.storageUsed }} TB</h3>
+                            <small class="text-secondary">/ {{ stats.storageTotal }} TB</small>
+                        </div>
+                        <div class="stat-icon bg-warning-subtle text-warning rounded-3 p-3">
+                            <i class="bi bi-hdd fs-4"></i>
+                        </div>
+                    </div>
+                    <div class="progress" style="height: 6px;">
+                        <div class="progress-bar bg-warning" :style="{ width: storagePercent + '%' }"></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+
+        <!-- 이번 달 조회수 -->
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <p class="text-secondary mb-1">이번 달 조회수</p>
+                            <h3 class="mb-0">{{ (stats.monthlyViews / 1000000).toFixed(1) }}M</h3>
+                            <small :class="getChangeClass(stats.viewsChange)">
+                                <i :class="getChangeIcon(stats.viewsChange)"></i>
+                                {{ Math.abs(stats.viewsChange) }}% 전월 대비
+                            </small>
+                        </div>
+                        <div class="stat-icon bg-success-subtle text-success rounded-3 p-3">
+                            <i class="bi bi-eye fs-4"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 대역폭 사용량 -->
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <p class="text-secondary mb-1">대역폭 (이번 달)</p>
+                            <h3 class="mb-0">{{ stats.bandwidth }} TB</h3>
+                            <small class="text-secondary">
+                                예상 비용: ${{ stats.bandwidthCost.toLocaleString() }}
+                            </small>
+                        </div>
+                        <div class="stat-icon bg-info-subtle text-info rounded-3 p-3">
+                            <i class="bi bi-speedometer2 fs-4"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 인코딩 현황 -->
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">인코딩 현황</h5>
+                    <a href="#/production/transcoding" class="text-primary text-decoration-none">
+                        전체보기 <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <!-- 진행 중 -->
+                        <div class="col-4">
+                            <div class="text-center p-3 bg-light rounded-3">
+                                <div class="fs-3 fw-bold text-primary">{{ encoding.inProgress }}</div>
+                                <div class="text-secondary">진행 중</div>
+                            </div>
+                        </div>
+                        <!-- 대기 중 -->
+                        <div class="col-4">
+                            <div class="text-center p-3 bg-light rounded-3">
+                                <div class="fs-3 fw-bold text-warning">{{ encoding.queued }}</div>
+                                <div class="text-secondary">대기 중</div>
+                            </div>
+                        </div>
+                        <!-- 오늘 완료 -->
+                        <div class="col-4">
+                            <div class="text-center p-3 bg-light rounded-3">
+                                <div class="fs-3 fw-bold text-success">{{ encoding.completed }}</div>
+                                <div class="text-secondary">오늘 완료</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 진행 중인 작업 -->
+                    <div v-if="encoding.jobs.length > 0" class="mt-3">
+                        <div v-for="job in encoding.jobs" :key="job.id" class="mb-2">
+                            <div class="d-flex justify-content-between small mb-1">
+                                <span class="text-truncate">{{ job.title }}</span>
+                                <span>{{ job.progress }}%</span>
+                            </div>
+                            <div class="progress" style="height: 4px;">
+                                <div class="progress-bar" :style="{ width: job.progress + '%' }"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 최근 활동 -->
+        <div class="col-12 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="mb-0">최근 활동</h5>
+                </div>
+                <div class="card-body p-0" style="max-height: 300px; overflow-y: auto;">
+                    <div v-for="activity in recentActivities" :key="activity.id" class="border-bottom p-3">
+                        <div class="d-flex gap-2">
+                            <i :class="activity.icon" class="text-primary"></i>
+                            <div class="flex-grow-1">
+                                <div class="small">{{ activity.message }}</div>
+                                <div class="text-secondary" style="font-size: 0.75rem;">{{ activity.time }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 인기 동영상 Top 5 -->
+    <div class="row g-3">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">인기 동영상 Top 5 (이번 주)</h5>
+                    <a href="#/analytics/videos" class="text-primary text-decoration-none">
+                        전체 분석 <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 50px;">#</th>
+                                    <th>동영상</th>
+                                    <th style="width: 120px;">조회수</th>
+                                    <th style="width: 120px;">재생 시간</th>
+                                    <th style="width: 100px;">완료율</th>
+                                    <th style="width: 100px;">상태</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(video, index) in topVideos" :key="video.id" class="cursor-pointer" @click="viewVideo(video.id)">
+                                    <td class="text-center">
+                                        <span class="badge" :class="getRankBadgeClass(index + 1)">{{ index + 1 }}</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <img :src="video.thumbnail" class="rounded" style="width: 80px; height: 45px; object-fit: cover;" :alt="video.title">
+                                            <div>
+                                                <div class="fw-medium">{{ video.title }}</div>
+                                                <small class="text-secondary">{{ video.duration }}</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>{{ video.views.toLocaleString() }}</div>
+                                        <small :class="getChangeClass(video.viewsChange)">
+                                            <i :class="getChangeIcon(video.viewsChange)"></i>
+                                            {{ Math.abs(video.viewsChange) }}%
+                                        </small>
+                                    </td>
+                                    <td>{{ video.watchTime }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-1">
+                                            <div class="flex-grow-1">
+                                                <div class="progress" style="height: 4px;">
+                                                    <div class="progress-bar" :class="getCompletionClass(video.completion)" :style="{ width: video.completion + '%' }"></div>
+                                                </div>
+                                            </div>
+                                            <small>{{ video.completion }}%</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge" :class="getStatusBadgeClass(video.status)">
+                                            {{ video.status }}
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
