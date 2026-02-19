@@ -56,6 +56,11 @@ body {
     z-index: 1000;
 }
 
+.header-side {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
 .header-hamburger {
     background: none;
     border: none;

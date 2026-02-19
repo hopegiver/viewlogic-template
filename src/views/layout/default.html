@@ -1,28 +1,24 @@
 <div class="app-layout">
     <!-- Header -->
     <header class="app-header">
-        <!-- 왼쪽: 햄버거 버튼 + 타이틀 + 검색박스 -->
-        <div class="d-flex align-items-center gap-3 flex-grow-1">
+        <!-- 왼쪽: 햄버거 버튼 + 타이틀 -->
+        <div class="header-side d-flex align-items-center gap-2">
             <button class="header-hamburger" @click="toggleSidebar">
                 <i class="bi bi-list"></i>
             </button>
             <div class="d-flex align-items-center fs-5 fw-semibold text-nowrap">
-                <i class="bi bi-play-btn-fill text-primary me-2"></i>
                 <span>{{ appName }}</span>
-            </div>
-            <div class="header-search ms-3">
-                <i class="bi bi-search"></i>
-                <input type="text" placeholder="동영상 검색..." v-model="searchQuery" @keyup.enter="handleSearch">
             </div>
         </div>
 
+        <!-- 중앙: 검색박스 -->
+        <div class="header-search">
+            <i class="bi bi-search"></i>
+            <input type="text" placeholder="동영상 검색..." v-model="searchQuery" @keyup.enter="handleSearch">
+        </div>
+
         <!-- 오른쪽: 업로드 + 알림 + 사용자 -->
-        <div class="d-flex align-items-center gap-2 ms-auto">
-            <!-- 업로드 버튼 -->
-            <button class="btn btn-primary btn-sm me-2" @click="goToUpload">
-                <i class="bi bi-cloud-upload me-1"></i>
-                업로드
-            </button>
+        <div class="header-side d-flex align-items-center gap-2 justify-content-end">
 
             <!-- 알림 -->
             <button class="header-action" @click="toggleNotifications">
@@ -78,104 +74,92 @@
                 <!-- 대시보드 -->
                 <div class="mx-2 my-1">
                     <a href="#/home" class="nav-link" :class="{ active: isActive('/home') }" @click="closeSidebar">
-                        <i class="bi bi-house-door"></i>
+                        <i class="bi bi-speedometer2"></i>
                         <span class="nav-label">대시보드</span>
                     </a>
                 </div>
 
-                <!-- 미디어 -->
+                <!-- 사용자 -->
                 <div class="mx-2 my-1">
-                    <div class="accordion-header" :class="{ active: isAccordionOpen('media') }" @click="toggleAccordion('media')">
-                        <i class="bi bi-film icon"></i>
-                        <span>미디어</span>
+                    <div class="accordion-header" :class="{ active: isAccordionOpen('users') }" @click="toggleAccordion('users')">
+                        <i class="bi bi-people icon"></i>
+                        <span>사용자</span>
                         <i class="bi bi-chevron-down chevron"></i>
                     </div>
-                    <div class="accordion-content" :class="{ open: isAccordionOpen('media') }">
-                        <a href="#/media/library" class="nav-link" :class="{ active: isActive('/media/library') }" @click="closeSidebar">
-                            <span class="nav-label">미디어 보관함</span>
+                    <div class="accordion-content" :class="{ open: isAccordionOpen('users') }">
+                        <a href="#/users/list" class="nav-link" :class="{ active: isActive('/users/list') }" @click="closeSidebar">
+                            <span class="nav-label">회원 목록</span>
                         </a>
-                        <a href="#/media/upload" class="nav-link" :class="{ active: isActive('/media/upload') }" @click="closeSidebar">
-                            <span class="nav-label">업로드</span>
+                        <a href="#/users/grades" class="nav-link" :class="{ active: isActive('/users/grades') }" @click="closeSidebar">
+                            <span class="nav-label">등급 관리</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- 배포 -->
+                <!-- 상품 -->
                 <div class="mx-2 my-1">
-                    <div class="accordion-header" :class="{ active: isAccordionOpen('distribution') }" @click="toggleAccordion('distribution')">
-                        <i class="bi bi-send icon"></i>
-                        <span>배포</span>
+                    <div class="accordion-header" :class="{ active: isAccordionOpen('products') }" @click="toggleAccordion('products')">
+                        <i class="bi bi-box-seam icon"></i>
+                        <span>상품</span>
                         <i class="bi bi-chevron-down chevron"></i>
                     </div>
-                    <div class="accordion-content" :class="{ open: isAccordionOpen('distribution') }">
-                        <a href="#/distribution/packages" class="nav-link" :class="{ active: isActive('/distribution/packages') }" @click="closeSidebar">
-                            <span class="nav-label">배포 패키지</span>
+                    <div class="accordion-content" :class="{ open: isAccordionOpen('products') }">
+                        <a href="#/products/list" class="nav-link" :class="{ active: isActive('/products/list') }" @click="closeSidebar">
+                            <span class="nav-label">상품 목록</span>
                         </a>
-                        <a href="#/distribution/embed" class="nav-link" :class="{ active: isActive('/distribution/embed') }" @click="closeSidebar">
-                            <span class="nav-label">임베드 코드</span>
+                        <a href="#/products/categories" class="nav-link" :class="{ active: isActive('/products/categories') }" @click="closeSidebar">
+                            <span class="nav-label">카테고리 관리</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- 제작 -->
+                <!-- 주문/결제 -->
                 <div class="mx-2 my-1">
-                    <div class="accordion-header" :class="{ active: isAccordionOpen('production') }" @click="toggleAccordion('production')">
-                        <i class="bi bi-palette icon"></i>
-                        <span>제작</span>
+                    <div class="accordion-header" :class="{ active: isAccordionOpen('orders') }" @click="toggleAccordion('orders')">
+                        <i class="bi bi-receipt icon"></i>
+                        <span>주문/결제</span>
                         <i class="bi bi-chevron-down chevron"></i>
                     </div>
-                    <div class="accordion-content" :class="{ open: isAccordionOpen('production') }">
-                        <a href="#/production/transcoding" class="nav-link" :class="{ active: isActive('/production/transcoding') }" @click="closeSidebar">
-                            <span class="nav-label">트랜스코딩</span>
+                    <div class="accordion-content" :class="{ open: isAccordionOpen('orders') }">
+                        <a href="#/orders/list" class="nav-link" :class="{ active: isActive('/orders/list') }" @click="closeSidebar">
+                            <span class="nav-label">주문 내역</span>
                         </a>
-                        <a href="#/production/subtitles" class="nav-link" :class="{ active: isActive('/production/subtitles') }" @click="closeSidebar">
-                            <span class="nav-label">자막 & 캡션</span>
-                        </a>
-                        <a href="#/production/editor" class="nav-link" :class="{ active: isActive('/production/editor') }" @click="closeSidebar">
-                            <span class="nav-label">편집 도구</span>
+                        <a href="#/orders/payments" class="nav-link" :class="{ active: isActive('/orders/payments') }" @click="closeSidebar">
+                            <span class="nav-label">결제 관리</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- 분석 -->
+                <!-- 통계 -->
                 <div class="mx-2 my-1">
-                    <div class="accordion-header" :class="{ active: isAccordionOpen('analytics') }" @click="toggleAccordion('analytics')">
-                        <i class="bi bi-bar-chart icon"></i>
-                        <span>분석</span>
+                    <div class="accordion-header" :class="{ active: isAccordionOpen('stats') }" @click="toggleAccordion('stats')">
+                        <i class="bi bi-bar-chart-line icon"></i>
+                        <span>통계</span>
                         <i class="bi bi-chevron-down chevron"></i>
                     </div>
-                    <div class="accordion-content" :class="{ open: isAccordionOpen('analytics') }">
-                        <a href="#/analytics/overview" class="nav-link" :class="{ active: isActive('/analytics/overview') }" @click="closeSidebar">
-                            <span class="nav-label">대시보드</span>
+                    <div class="accordion-content" :class="{ open: isAccordionOpen('stats') }">
+                        <a href="#/stats/sales" class="nav-link" :class="{ active: isActive('/stats/sales') }" @click="closeSidebar">
+                            <span class="nav-label">매출 통계</span>
                         </a>
-                        <a href="#/analytics/videos" class="nav-link" :class="{ active: isActive('/analytics/videos') }" @click="closeSidebar">
-                            <span class="nav-label">동영상 분석</span>
-                        </a>
-                        <a href="#/analytics/audience" class="nav-link" :class="{ active: isActive('/analytics/audience') }" @click="closeSidebar">
-                            <span class="nav-label">시청자 분석</span>
-                        </a>
-                        <a href="#/analytics/traffic" class="nav-link" :class="{ active: isActive('/analytics/traffic') }" @click="closeSidebar">
-                            <span class="nav-label">트래픽 리포트</span>
+                        <a href="#/stats/visitors" class="nav-link" :class="{ active: isActive('/stats/visitors') }" @click="closeSidebar">
+                            <span class="nav-label">방문자 분석</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- 수익화 -->
+                <!-- 홈페이지 -->
                 <div class="mx-2 my-1">
-                    <div class="accordion-header" :class="{ active: isAccordionOpen('monetization') }" @click="toggleAccordion('monetization')">
-                        <i class="bi bi-currency-dollar icon"></i>
-                        <span>수익화</span>
+                    <div class="accordion-header" :class="{ active: isAccordionOpen('site') }" @click="toggleAccordion('site')">
+                        <i class="bi bi-globe icon"></i>
+                        <span>홈페이지</span>
                         <i class="bi bi-chevron-down chevron"></i>
                     </div>
-                    <div class="accordion-content" :class="{ open: isAccordionOpen('monetization') }">
-                        <a href="#/monetization/ads" class="nav-link" :class="{ active: isActive('/monetization/ads') }" @click="closeSidebar">
-                            <span class="nav-label">광고</span>
+                    <div class="accordion-content" :class="{ open: isAccordionOpen('site') }">
+                        <a href="#/site/banners" class="nav-link" :class="{ active: isActive('/site/banners') }" @click="closeSidebar">
+                            <span class="nav-label">배너 관리</span>
                         </a>
-                        <a href="#/monetization/subscription" class="nav-link" :class="{ active: isActive('/monetization/subscription') }" @click="closeSidebar">
-                            <span class="nav-label">구독 모델</span>
-                        </a>
-                        <a href="#/monetization/revenue" class="nav-link" :class="{ active: isActive('/monetization/revenue') }" @click="closeSidebar">
-                            <span class="nav-label">수익 대시보드</span>
+                        <a href="#/site/notices" class="nav-link" :class="{ active: isActive('/site/notices') }" @click="closeSidebar">
+                            <span class="nav-label">공지사항</span>
                         </a>
                     </div>
                 </div>
@@ -188,57 +172,11 @@
                         <i class="bi bi-chevron-down chevron"></i>
                     </div>
                     <div class="accordion-content" :class="{ open: isAccordionOpen('settings') }">
-                        <a href="#/settings/player" class="nav-link" :class="{ active: isActive('/settings/player') }" @click="closeSidebar">
-                            <span class="nav-label">플레이어 스튜디오</span>
+                        <a href="#/settings/general" class="nav-link" :class="{ active: isActive('/settings/general') }" @click="closeSidebar">
+                            <span class="nav-label">기본 설정</span>
                         </a>
-                        <a href="#/settings/encoding" class="nav-link" :class="{ active: isActive('/settings/encoding') }" @click="closeSidebar">
-                            <span class="nav-label">인코딩 프로필</span>
-                        </a>
-                        <a href="#/settings/storage" class="nav-link" :class="{ active: isActive('/settings/storage') }" @click="closeSidebar">
-                            <span class="nav-label">스토리지 & CDN</span>
-                        </a>
-                        <a href="#/settings/api" class="nav-link" :class="{ active: isActive('/settings/api') }" @click="closeSidebar">
-                            <span class="nav-label">API & Webhooks</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 사용자 -->
-                <div class="mx-2 my-1">
-                    <div class="accordion-header" :class="{ active: isAccordionOpen('users') }" @click="toggleAccordion('users')">
-                        <i class="bi bi-people icon"></i>
-                        <span>사용자</span>
-                        <i class="bi bi-chevron-down chevron"></i>
-                    </div>
-                    <div class="accordion-content" :class="{ open: isAccordionOpen('users') }">
-                        <a href="#/users/team" class="nav-link" :class="{ active: isActive('/users/team') }" @click="closeSidebar">
-                            <span class="nav-label">팀 관리</span>
-                        </a>
-                        <a href="#/users/permissions" class="nav-link" :class="{ active: isActive('/users/permissions') }" @click="closeSidebar">
-                            <span class="nav-label">권한 관리</span>
-                        </a>
-                        <a href="#/users/activity" class="nav-link" :class="{ active: isActive('/users/activity') }" @click="closeSidebar">
-                            <span class="nav-label">활동 로그</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 시스템 -->
-                <div class="mx-2 my-1">
-                    <div class="accordion-header" :class="{ active: isAccordionOpen('system') }" @click="toggleAccordion('system')">
-                        <i class="bi bi-cpu icon"></i>
-                        <span>시스템</span>
-                        <i class="bi bi-chevron-down chevron"></i>
-                    </div>
-                    <div class="accordion-content" :class="{ open: isAccordionOpen('system') }">
-                        <a href="#/system/automation" class="nav-link" :class="{ active: isActive('/system/automation') }" @click="closeSidebar">
-                            <span class="nav-label">자동화</span>
-                        </a>
-                        <a href="#/system/notifications" class="nav-link" :class="{ active: isActive('/system/notifications') }" @click="closeSidebar">
-                            <span class="nav-label">알림 설정</span>
-                        </a>
-                        <a href="#/system/live" class="nav-link" :class="{ active: isActive('/system/live') }" @click="closeSidebar">
-                            <span class="nav-label">라이브 스트리밍</span>
+                        <a href="#/settings/admin" class="nav-link" :class="{ active: isActive('/settings/admin') }" @click="closeSidebar">
+                            <span class="nav-label">관리자 계정</span>
                         </a>
                     </div>
                 </div>

@@ -4,26 +4,22 @@ export default {
         const path = window.location.hash.substring(1);
         let initialOpenAccordions = [];
 
-        if (path.startsWith('/media')) {
-            initialOpenAccordions = ['media'];
-        } else if (path.startsWith('/distribution')) {
-            initialOpenAccordions = ['distribution'];
-        } else if (path.startsWith('/production')) {
-            initialOpenAccordions = ['production'];
-        } else if (path.startsWith('/analytics')) {
-            initialOpenAccordions = ['analytics'];
-        } else if (path.startsWith('/monetization')) {
-            initialOpenAccordions = ['monetization'];
+        if (path.startsWith('/users')) {
+            initialOpenAccordions = ['users'];
+        } else if (path.startsWith('/products')) {
+            initialOpenAccordions = ['products'];
+        } else if (path.startsWith('/orders')) {
+            initialOpenAccordions = ['orders'];
+        } else if (path.startsWith('/stats')) {
+            initialOpenAccordions = ['stats'];
+        } else if (path.startsWith('/site')) {
+            initialOpenAccordions = ['site'];
         } else if (path.startsWith('/settings')) {
             initialOpenAccordions = ['settings'];
-        } else if (path.startsWith('/users')) {
-            initialOpenAccordions = ['users'];
-        } else if (path.startsWith('/system')) {
-            initialOpenAccordions = ['system'];
         }
 
         return {
-            appName: 'VideoPack OVP',
+            appName: '맑은소프트',
             sidebarVisible: window.innerWidth > 1024,
             isMobile: window.innerWidth <= 1024,
             openAccordions: initialOpenAccordions,
@@ -83,22 +79,18 @@ export default {
         openCurrentAccordion() {
             const path = window.location.hash.substring(1);
 
-            if (path.startsWith('/media')) {
-                this.openAccordions = ['media'];
-            } else if (path.startsWith('/distribution')) {
-                this.openAccordions = ['distribution'];
-            } else if (path.startsWith('/production')) {
-                this.openAccordions = ['production'];
-            } else if (path.startsWith('/analytics')) {
-                this.openAccordions = ['analytics'];
-            } else if (path.startsWith('/monetization')) {
-                this.openAccordions = ['monetization'];
+            if (path.startsWith('/users')) {
+                this.openAccordions = ['users'];
+            } else if (path.startsWith('/products')) {
+                this.openAccordions = ['products'];
+            } else if (path.startsWith('/orders')) {
+                this.openAccordions = ['orders'];
+            } else if (path.startsWith('/stats')) {
+                this.openAccordions = ['stats'];
+            } else if (path.startsWith('/site')) {
+                this.openAccordions = ['site'];
             } else if (path.startsWith('/settings')) {
                 this.openAccordions = ['settings'];
-            } else if (path.startsWith('/users')) {
-                this.openAccordions = ['users'];
-            } else if (path.startsWith('/system')) {
-                this.openAccordions = ['system'];
             }
         },
         isActive(path) {
