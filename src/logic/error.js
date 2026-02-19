@@ -60,9 +60,9 @@ export default {
         async handleRetry() {
             this.isRetrying = true;
             try {
-                // Try to reload current page
                 await new Promise(resolve => setTimeout(resolve, 1000));
-                window.location.reload();
+                const currentRoute = this.getCurrentRoute();
+                this.navigateTo(currentRoute || '/home');
             } catch (error) {
                 console.error('Retry failed:', error);
             } finally {
@@ -70,14 +70,10 @@ export default {
             }
         },
         goHome() {
-            if (this.$router) {
-                this.$router.navigateTo('home');
-            } else {
-                window.location.href = '#/';
-            }
+            this.navigateTo('/home');
         },
         goBack() {
-            window.history.back();
+            this.navigateTo('/home');
         },
         reportError() {
             // Error reporting logic (can be implemented later)

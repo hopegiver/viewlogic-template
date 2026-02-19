@@ -11,7 +11,7 @@ export default {
                 { name: 'Components', route: 'components', description: 'View all available UI components' },
                 { name: 'Contact', route: 'contact', description: 'Check contact information' }
             ],
-            requestedUrl: window.location.hash || window.location.pathname
+            requestedUrl: this.getCurrentRoute() || ''
         }
     },
     methods: {
@@ -46,11 +46,7 @@ export default {
             alert('Broken link has been reported. We will fix it as soon as possible.');
         },
         goBack() {
-            if (window.history.length > 1) {
-                window.history.back();
-            } else {
-                this.navigateTo('home');
-            }
+            this.navigateTo('/home');
         }
     }
 }
