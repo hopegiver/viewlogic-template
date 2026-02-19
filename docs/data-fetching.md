@@ -2,7 +2,11 @@
 
 ## 자동 데이터 로딩 (dataURL)
 
-가장 간단한 방법 - `dataURL` 속성 지정 시 자동 GET 요청:
+`dataURL` 속성 지정 시 마운트 전에 자동 GET 요청.
+
+### 문자열 형태 (단일 API)
+
+응답 데이터가 data()의 속성들에 자동 매핑:
 
 ```javascript
 export default {
@@ -14,20 +18,33 @@ export default {
 }
 ```
 
-### 파라미터 치환
+### 객체 형태 (다중 API)
+
+key가 data()의 변수명, value가 API URL:
 
 ```javascript
 export default {
-    name: 'UserDetail',
+    name: 'Dashboard',
     dataURL: {
-        url: '/api/users/{id}',  // {id}는 URL 파라미터에서 자동 치환
-        method: 'GET'
+        users: '/api/users',
+        stats: '/api/stats'
     },
     data() {
-        return { user: null }
+        return {
+            users: [],   // /api/users 응답 → this.users
+            stats: null   // /api/stats 응답 → this.stats
+        }
     }
 }
-// /#/user-detail?id=123 → GET /api/users/123
+```
+
+URL에 `{param}` 포함 시 쿼리 파라미터에서 자동 치환:
+
+```javascript
+dataURL: {
+    user: '/api/users/{id}'
+}
+// /#/user-detail?id=123 → GET /api/users/123 → this.user
 ```
 
 ## 수동 API 호출

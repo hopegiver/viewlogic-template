@@ -53,6 +53,7 @@ project/
 | [docs/components.md](docs/components.md) | 컴포넌트 생성/등록 |
 | [docs/components-builtin.md](docs/components-builtin.md) | 내장 컴포넌트 상세 (DatePicker, Table, Sidebar 등) |
 | [docs/layout.md](docs/layout.md) | 레이아웃 시스템, 레이아웃 지정 |
+| [docs/patterns.md](docs/patterns.md) | 공통 패턴 (로딩 상태, 에러 처리, 폼 밸리데이션, 검색/필터) |
 | [docs/advanced.md](docs/advanced.md) | 라이프사이클, computed, watch, 캐싱, 상태 관리 |
 | [docs/configuration.md](docs/configuration.md) | ViewLogicRouter 전체 설정 옵션 |
 
@@ -68,15 +69,13 @@ project/
 
 ## 템플릿
 
-`.claude/templates/` 폴더에 코드 템플릿이 있습니다:
+`.claude/templates/` 폴더에 변형 패턴 포함 템플릿 문서가 있습니다:
 
 | 템플릿 | 용도 |
 |--------|------|
-| `page.js` | 페이지 JavaScript 기본 구조 |
-| `page.html` | 페이지 HTML 기본 구조 |
-| `component.js` | 컴포넌트 기본 구조 |
-| `layout.html` | 레이아웃 HTML 기본 구조 |
-| `layout.js` | 레이아웃 JavaScript 기본 구조 |
+| `page.md` | 페이지 (정적, 목록, 상세, 폼 4가지 변형) |
+| `component.md` | 컴포넌트 (기본, 슬롯, v-model 3가지 변형) |
+| `layout.md` | 레이아웃 (네비게이션, 사이드바 2가지 변형) |
 
 ## 개발 서버
 
@@ -84,3 +83,8 @@ project/
 python -m http.server 8000
 # 또는 VS Code Live Server (포트 5502)
 ```
+
+## 추가 리소스
+
+- **GitHub**: https://github.com/hopegiver/viewlogic
+- **npm**: https://www.npmjs.com/package/viewlogic
