@@ -24,9 +24,8 @@ export default {
 
         return {
             appName: 'VideoPack OVP',
-            sidebarIconMode: false,
-            sidebarVisible: true,
-            isMobile: false,
+            sidebarVisible: window.innerWidth > 1024,
+            isMobile: window.innerWidth <= 1024,
             openAccordions: initialOpenAccordions,
             searchQuery: '',
             notificationCount: 2,
@@ -54,7 +53,13 @@ export default {
     },
     methods: {
         checkScreenSize() {
-            this.isMobile = window.innerWidth < 768;
+            const wasMobile = this.isMobile;
+            this.isMobile = window.innerWidth <= 1024;
+            if (wasMobile && !this.isMobile) {
+                this.sidebarVisible = true;
+            } else if (!wasMobile && this.isMobile) {
+                this.sidebarVisible = false;
+            }
         },
         toggleSidebar() {
             this.sidebarVisible = !this.sidebarVisible;

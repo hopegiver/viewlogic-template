@@ -2,11 +2,11 @@
     <!-- Header -->
     <header class="app-header">
         <!-- 왼쪽: 햄버거 버튼 + 타이틀 + 검색박스 -->
-        <div class="header-left">
+        <div class="d-flex align-items-center gap-3 flex-grow-1">
             <button class="header-hamburger" @click="toggleSidebar">
                 <i class="bi bi-list"></i>
             </button>
-            <div class="header-title">
+            <div class="d-flex align-items-center fs-5 fw-semibold text-nowrap">
                 <i class="bi bi-play-btn-fill text-primary me-2"></i>
                 <span>{{ appName }}</span>
             </div>
@@ -17,7 +17,7 @@
         </div>
 
         <!-- 오른쪽: 업로드 + 알림 + 사용자 -->
-        <div class="header-right ms-auto">
+        <div class="d-flex align-items-center gap-2 ms-auto">
             <!-- 업로드 버튼 -->
             <button class="btn btn-primary btn-sm me-2" @click="goToUpload">
                 <i class="bi bi-cloud-upload me-1"></i>
@@ -41,14 +41,14 @@
 
                 <!-- 드롭다운 메뉴 -->
                 <div class="user-dropdown" v-show="showUserMenu">
-                    <div class="user-dropdown-header">
-                        <div class="user-dropdown-avatar">{{ userInitial }}</div>
+                    <div class="d-flex align-items-center gap-3 p-3">
+                        <div class="user-avatar">{{ userInitial }}</div>
                         <div>
-                            <div class="user-dropdown-name">{{ userName }}</div>
-                            <div class="user-dropdown-role">{{ userRole }}</div>
+                            <div class="user-name">{{ userName }}</div>
+                            <div class="user-role">{{ userRole }}</div>
                         </div>
                     </div>
-                    <div class="user-dropdown-divider"></div>
+                    <hr class="m-0">
                     <a href="#/settings/account" class="user-dropdown-item" @click.stop="goToAccount">
                         <i class="bi bi-person"></i>
                         <span>계정 설정</span>
@@ -57,7 +57,7 @@
                         <i class="bi bi-key"></i>
                         <span>API 키</span>
                     </a>
-                    <div class="user-dropdown-divider"></div>
+                    <hr class="m-0">
                     <button class="user-dropdown-item text-danger" @click.stop="handleLogout">
                         <i class="bi bi-box-arrow-right"></i>
                         <span>로그아웃</span>
@@ -73,24 +73,24 @@
         <div class="sidebar-overlay" :class="{ 'show': isMobile && sidebarVisible }" @click="closeSidebar"></div>
 
         <!-- Sidebar -->
-        <aside class="app-sidebar" :class="{ 'icon-mode': sidebarIconMode, 'show': sidebarVisible }">
-            <nav class="sidebar-nav">
+        <aside class="app-sidebar" :class="{ 'show': sidebarVisible }">
+            <nav class="py-3">
                 <!-- 대시보드 -->
-                <div class="nav-item">
+                <div class="mx-2 my-1">
                     <a href="#/home" class="nav-link" :class="{ active: isActive('/home') }" @click="closeSidebar">
                         <i class="bi bi-house-door"></i>
-                        <span class="nav-label" v-show="!sidebarIconMode">대시보드</span>
+                        <span class="nav-label">대시보드</span>
                     </a>
                 </div>
 
                 <!-- 미디어 -->
-                <div class="nav-accordion">
+                <div class="mx-2 my-1">
                     <div class="accordion-header" :class="{ active: isAccordionOpen('media') }" @click="toggleAccordion('media')">
                         <i class="bi bi-film icon"></i>
-                        <span v-show="!sidebarIconMode">미디어</span>
-                        <i class="bi bi-chevron-down chevron" v-show="!sidebarIconMode"></i>
+                        <span>미디어</span>
+                        <i class="bi bi-chevron-down chevron"></i>
                     </div>
-                    <div class="accordion-content" :class="{ open: isAccordionOpen('media') }" v-show="!sidebarIconMode">
+                    <div class="accordion-content" :class="{ open: isAccordionOpen('media') }">
                         <a href="#/media/library" class="nav-link" :class="{ active: isActive('/media/library') }" @click="closeSidebar">
                             <span class="nav-label">미디어 보관함</span>
                         </a>
@@ -101,13 +101,13 @@
                 </div>
 
                 <!-- 배포 -->
-                <div class="nav-accordion">
+                <div class="mx-2 my-1">
                     <div class="accordion-header" :class="{ active: isAccordionOpen('distribution') }" @click="toggleAccordion('distribution')">
                         <i class="bi bi-send icon"></i>
-                        <span v-show="!sidebarIconMode">배포</span>
-                        <i class="bi bi-chevron-down chevron" v-show="!sidebarIconMode"></i>
+                        <span>배포</span>
+                        <i class="bi bi-chevron-down chevron"></i>
                     </div>
-                    <div class="accordion-content" :class="{ open: isAccordionOpen('distribution') }" v-show="!sidebarIconMode">
+                    <div class="accordion-content" :class="{ open: isAccordionOpen('distribution') }">
                         <a href="#/distribution/packages" class="nav-link" :class="{ active: isActive('/distribution/packages') }" @click="closeSidebar">
                             <span class="nav-label">배포 패키지</span>
                         </a>
@@ -118,13 +118,13 @@
                 </div>
 
                 <!-- 제작 -->
-                <div class="nav-accordion">
+                <div class="mx-2 my-1">
                     <div class="accordion-header" :class="{ active: isAccordionOpen('production') }" @click="toggleAccordion('production')">
                         <i class="bi bi-palette icon"></i>
-                        <span v-show="!sidebarIconMode">제작</span>
-                        <i class="bi bi-chevron-down chevron" v-show="!sidebarIconMode"></i>
+                        <span>제작</span>
+                        <i class="bi bi-chevron-down chevron"></i>
                     </div>
-                    <div class="accordion-content" :class="{ open: isAccordionOpen('production') }" v-show="!sidebarIconMode">
+                    <div class="accordion-content" :class="{ open: isAccordionOpen('production') }">
                         <a href="#/production/transcoding" class="nav-link" :class="{ active: isActive('/production/transcoding') }" @click="closeSidebar">
                             <span class="nav-label">트랜스코딩</span>
                         </a>
@@ -138,13 +138,13 @@
                 </div>
 
                 <!-- 분석 -->
-                <div class="nav-accordion">
+                <div class="mx-2 my-1">
                     <div class="accordion-header" :class="{ active: isAccordionOpen('analytics') }" @click="toggleAccordion('analytics')">
                         <i class="bi bi-bar-chart icon"></i>
-                        <span v-show="!sidebarIconMode">분석</span>
-                        <i class="bi bi-chevron-down chevron" v-show="!sidebarIconMode"></i>
+                        <span>분석</span>
+                        <i class="bi bi-chevron-down chevron"></i>
                     </div>
-                    <div class="accordion-content" :class="{ open: isAccordionOpen('analytics') }" v-show="!sidebarIconMode">
+                    <div class="accordion-content" :class="{ open: isAccordionOpen('analytics') }">
                         <a href="#/analytics/overview" class="nav-link" :class="{ active: isActive('/analytics/overview') }" @click="closeSidebar">
                             <span class="nav-label">대시보드</span>
                         </a>
@@ -161,13 +161,13 @@
                 </div>
 
                 <!-- 수익화 -->
-                <div class="nav-accordion">
+                <div class="mx-2 my-1">
                     <div class="accordion-header" :class="{ active: isAccordionOpen('monetization') }" @click="toggleAccordion('monetization')">
                         <i class="bi bi-currency-dollar icon"></i>
-                        <span v-show="!sidebarIconMode">수익화</span>
-                        <i class="bi bi-chevron-down chevron" v-show="!sidebarIconMode"></i>
+                        <span>수익화</span>
+                        <i class="bi bi-chevron-down chevron"></i>
                     </div>
-                    <div class="accordion-content" :class="{ open: isAccordionOpen('monetization') }" v-show="!sidebarIconMode">
+                    <div class="accordion-content" :class="{ open: isAccordionOpen('monetization') }">
                         <a href="#/monetization/ads" class="nav-link" :class="{ active: isActive('/monetization/ads') }" @click="closeSidebar">
                             <span class="nav-label">광고</span>
                         </a>
@@ -181,13 +181,13 @@
                 </div>
 
                 <!-- 설정 -->
-                <div class="nav-accordion">
+                <div class="mx-2 my-1">
                     <div class="accordion-header" :class="{ active: isAccordionOpen('settings') }" @click="toggleAccordion('settings')">
                         <i class="bi bi-gear icon"></i>
-                        <span v-show="!sidebarIconMode">설정</span>
-                        <i class="bi bi-chevron-down chevron" v-show="!sidebarIconMode"></i>
+                        <span>설정</span>
+                        <i class="bi bi-chevron-down chevron"></i>
                     </div>
-                    <div class="accordion-content" :class="{ open: isAccordionOpen('settings') }" v-show="!sidebarIconMode">
+                    <div class="accordion-content" :class="{ open: isAccordionOpen('settings') }">
                         <a href="#/settings/player" class="nav-link" :class="{ active: isActive('/settings/player') }" @click="closeSidebar">
                             <span class="nav-label">플레이어 스튜디오</span>
                         </a>
@@ -204,13 +204,13 @@
                 </div>
 
                 <!-- 사용자 -->
-                <div class="nav-accordion">
+                <div class="mx-2 my-1">
                     <div class="accordion-header" :class="{ active: isAccordionOpen('users') }" @click="toggleAccordion('users')">
                         <i class="bi bi-people icon"></i>
-                        <span v-show="!sidebarIconMode">사용자</span>
-                        <i class="bi bi-chevron-down chevron" v-show="!sidebarIconMode"></i>
+                        <span>사용자</span>
+                        <i class="bi bi-chevron-down chevron"></i>
                     </div>
-                    <div class="accordion-content" :class="{ open: isAccordionOpen('users') }" v-show="!sidebarIconMode">
+                    <div class="accordion-content" :class="{ open: isAccordionOpen('users') }">
                         <a href="#/users/team" class="nav-link" :class="{ active: isActive('/users/team') }" @click="closeSidebar">
                             <span class="nav-label">팀 관리</span>
                         </a>
@@ -224,13 +224,13 @@
                 </div>
 
                 <!-- 시스템 -->
-                <div class="nav-accordion">
+                <div class="mx-2 my-1">
                     <div class="accordion-header" :class="{ active: isAccordionOpen('system') }" @click="toggleAccordion('system')">
                         <i class="bi bi-cpu icon"></i>
-                        <span v-show="!sidebarIconMode">시스템</span>
-                        <i class="bi bi-chevron-down chevron" v-show="!sidebarIconMode"></i>
+                        <span>시스템</span>
+                        <i class="bi bi-chevron-down chevron"></i>
                     </div>
-                    <div class="accordion-content" :class="{ open: isAccordionOpen('system') }" v-show="!sidebarIconMode">
+                    <div class="accordion-content" :class="{ open: isAccordionOpen('system') }">
                         <a href="#/system/automation" class="nav-link" :class="{ active: isActive('/system/automation') }" @click="closeSidebar">
                             <span class="nav-label">자동화</span>
                         </a>
@@ -246,7 +246,7 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="app-main" :class="{ 'with-sidebar': sidebarVisible, 'with-sidebar-icon': sidebarIconMode }">
+        <main class="app-main">
             {{ content }}
         </main>
     </div>
