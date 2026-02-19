@@ -27,6 +27,8 @@
 /* ==================== 전역 스타일 ==================== */
 * {
     box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gray-200) transparent;
 }
 
 body {
