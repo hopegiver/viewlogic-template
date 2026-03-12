@@ -22,8 +22,11 @@ methods: {
     async loadData() {
         this.loading = true;
         try {
-            const response = await this.$api.get('/api/items');
-            this.items = response.data;
+            // TODO: API 연동 시 아래 주석으로 교체
+            // const response = await this.$api.get('/api/items');
+            // this.items = response.data;
+            const response = await fetch('mock-api/items.json');
+            this.items = await response.json();
         } catch (error) {
             console.error('데이터 로딩 실패:', error);
         } finally {

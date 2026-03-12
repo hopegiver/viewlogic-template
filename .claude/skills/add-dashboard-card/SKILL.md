@@ -10,8 +10,15 @@ description: 대시보드에 통계 카드(KPI), 테이블 카드, 활동 로그
 AskUserQuestion으로 다음을 확인:
 - **대상 페이지** (예: home, dashboard)
 - **카드 유형** (통계 카드, 테이블 카드, 차트 카드, 활동 로그)
-- **데이터 소스** (정적 데이터 / API 엔드포인트)
+- **데이터 소스** (API 엔드포인트 — API 연동 시 사용할 경로)
 - **카드 제목 및 설명**
+
+## Mock 데이터
+
+대시보드 데이터는 `mock-api/{page}-stats.json`에 JSON으로 분리한다.
+기존 mock-api 파일이 있으면 해당 파일에 데이터를 추가하고, 없으면 새로 생성한다.
+JS에서 `fetch('mock-api/...')`로 로드하며, TODO 주석으로 실제 API 코드를 포함한다.
+`.claude/templates/page.md`의 "Mock 데이터 규칙" 섹션 참조.
 
 ## 카드 유형별 구조
 

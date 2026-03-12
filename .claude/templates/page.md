@@ -3,11 +3,41 @@
 페이지는 항상 **view (.html)** + **logic (.js)** 쌍으로 생성한다.
 파일 경로: `src/views/{folder}/{name}.html` + `src/logic/{folder}/{name}.js`
 
+## Mock 데이터 규칙
+
+데이터가 필요한 페이지(목록, 상세, 대시보드 등)는 반드시 **mock-api 폴더**에 JSON 파일로 분리한다.
+
+```
+mock-api/{resource}.json      # 목록 데이터 (배열)
+mock-api/{resource}-detail.json  # 단일 항목 (선택)
+mock-api/{page}-stats.json    # 대시보드/통계 데이터
+```
+
+**JS에서 mock 데이터 로드:**
+```javascript
+async loadData() {
+    this.loading = true;
+    try {
+        // TODO: API 연동 시 아래 주석으로 교체
+        // const response = await this.$api.get('/api/items');
+        // this.items = response.data;
+        const response = await fetch('mock-api/items.json');
+        this.items = await response.json();
+    } catch (error) {
+        console.error('데이터 로딩 실패:', error);
+    } finally {
+        this.loading = false;
+    }
+}
+```
+
+**교체 규칙:** API 연동 시 `fetch('mock-api/...')` 2줄을 삭제하고 위 주석을 해제하면 끝.
+
 ---
 
 ## 1. 기본 페이지 (정적)
 
-API 호출 없이 데이터만 표시하는 단순 페이지.
+API 호출 없이 데이터만 표시하는 단순 페이지. mock-api 불필요.
 
 **logic:**
 ```javascript
@@ -33,9 +63,17 @@ export default {
 
 ---
 
-## 2. 목록 페이지 (API + 로딩)
+## 2. 목록 페이지 (데이터 + 로딩)
 
-API에서 데이터를 불러와 카드/리스트로 표시. 로딩/빈 상태 처리 포함.
+mock-api에서 데이터를 불러와 카드/리스트로 표시. 로딩/빈 상태 처리 포함.
+
+**mock-api/{resource}.json:**
+```json
+[
+    { "id": 1, "title": "항목 1", "description": "설명 텍스트" },
+    { "id": 2, "title": "항목 2", "description": "설명 텍스트" }
+]
+```
 
 **logic:**
 ```javascript
@@ -58,8 +96,11 @@ export default {
         async loadData() {
             this.loading = true;
             try {
-                const response = await this.$api.get('/api/items');
-                this.items = response.data;
+                // TODO: API 연동 시 아래 주석으로 교체
+                // const response = await this.$api.get('/api/items');
+                // this.items = response.data;
+                const response = await fetch('mock-api/items.json');
+                this.items = await response.json();
             } catch (error) {
                 console.error('데이터 로딩 실패:', error);
             } finally {
@@ -111,7 +152,7 @@ export default {
 
 ## 3. 상세 페이지 (파라미터 받기)
 
-URL 파라미터로 ID를 받아 단일 항목을 로드.
+URL 파라미터로 ID를 받아 단일 항목을 로드. mock-api에서는 목록 JSON을 로드 후 ID로 필터링.
 
 **logic:**
 ```javascript
@@ -135,8 +176,12 @@ export default {
         async loadItem() {
             this.loading = true;
             try {
-                const response = await this.$api.get(`/api/items/${this.id}`);
-                this.item = response.data;
+                // TODO: API 연동 시 아래 주석으로 교체
+                // const response = await this.$api.get(`/api/items/${this.id}`);
+                // this.item = response.data;
+                const response = await fetch('mock-api/items.json');
+                const items = await response.json();
+                this.item = items.find(item => item.id === Number(this.id));
             } catch (error) {
                 console.error('로딩 실패:', error);
             } finally {
@@ -151,7 +196,7 @@ export default {
 
 ## 4. 폼 페이지 (생성/수정)
 
-폼 제출로 데이터를 생성하거나 수정.
+폼 제출로 데이터를 생성하거나 수정. 수정 시 mock-api에서 기존 데이터를 로드.
 
 **logic:**
 ```javascript
@@ -184,18 +229,25 @@ export default {
 
     methods: {
         async loadItem() {
-            const response = await this.$api.get(`/api/items/${this.id}`);
-            this.form = response.data;
+            // TODO: API 연동 시 아래 주석으로 교체
+            // const response = await this.$api.get(`/api/items/${this.id}`);
+            // this.form = response.data;
+            const response = await fetch('mock-api/items.json');
+            const items = await response.json();
+            const item = items.find(item => item.id === Number(this.id));
+            if (item) this.form = item;
         },
 
         async handleSubmit() {
             this.isLoading = true;
             try {
-                if (this.isEdit) {
-                    await this.$api.put(`/api/items/${this.id}`, this.form);
-                } else {
-                    await this.$api.post('/api/items', this.form);
-                }
+                // TODO: API 연동 시 아래 주석 해제
+                // if (this.isEdit) {
+                //     await this.$api.put(`/api/items/${this.id}`, this.form);
+                // } else {
+                //     await this.$api.post('/api/items', this.form);
+                // }
+                console.log('폼 제출:', this.form);
                 this.navigateTo('/items');
             } catch (error) {
                 console.error('저장 실패:', error);

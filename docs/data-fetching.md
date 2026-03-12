@@ -1,5 +1,54 @@
 # 데이터 페칭 (Data Fetching)
 
+## Mock 데이터 (개발용)
+
+개발 시 mock 데이터는 `mock-api/` 폴더에 JSON 파일로 분리하여 관리한다.
+
+```
+mock-api/
+├── users.json          # 사용자 목록
+├── products.json       # 상품 목록
+└── dashboard-stats.json  # 대시보드 통계
+```
+
+### Mock 데이터 로드
+
+```javascript
+async loadData() {
+    this.loading = true;
+    try {
+        // TODO: API 연동 시 아래 주석으로 교체
+        // const response = await this.$api.get('/api/users');
+        // this.items = response.data;
+        const response = await fetch('mock-api/users.json');
+        this.items = await response.json();
+    } catch (error) {
+        console.error('데이터 로딩 실패:', error);
+    } finally {
+        this.loading = false;
+    }
+}
+```
+
+### 상세 조회 (ID로 필터링)
+
+```javascript
+async loadItem() {
+    // TODO: API 연동 시 아래 주석으로 교체
+    // const response = await this.$api.get(`/api/users/${this.id}`);
+    // this.item = response.data;
+    const response = await fetch('mock-api/users.json');
+    const items = await response.json();
+    this.item = items.find(item => item.id === Number(this.id));
+}
+```
+
+### API 연동 전환
+
+`fetch('mock-api/...')` 2줄을 삭제하고 위 TODO 주석을 해제하면 완료.
+
+---
+
 ## 자동 데이터 로딩 (dataURL)
 
 `dataURL` 속성 지정 시 마운트 전에 자동 GET 요청.

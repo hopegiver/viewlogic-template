@@ -17,6 +17,8 @@ Vue 3 + ViewLogic Router 기반의 SPA 템플릿. Bootstrap 5로 스타일링하
 project/
 ├── index.html              # 진입점 (Vue, ViewLogic, Bootstrap CDN 로드)
 ├── css/base.css            # 커스텀 CSS (Bootstrap 우선, 최소화)
+├── mock-api/               # Mock 데이터 (API 연동 전 개발용 JSON)
+│   └── {resource}.json     # 리소스별 샘플 데이터
 ├── src/
 │   ├── views/              # HTML 템플릿 (CSS 금지)
 │   │   ├── layout/         # 레이아웃 템플릿
@@ -41,7 +43,7 @@ project/
 | 문서 | 내용 |
 |------|------|
 | [docs/routing.md](docs/routing.md) | 파일 기반 라우팅, 페이지 이동, 파라미터 |
-| [docs/data-fetching.md](docs/data-fetching.md) | dataURL 자동 로딩, 수동 API 호출 |
+| [docs/data-fetching.md](docs/data-fetching.md) | Mock 데이터, dataURL 자동 로딩, 수동 API 호출 |
 | [docs/forms.md](docs/forms.md) | 명령형/선언적 폼 처리 |
 | [docs/api.md](docs/api.md) | $api 메서드 (GET/POST/PUT/DELETE), 에러 처리 |
 | [docs/auth.md](docs/auth.md) | 인증 설정, 로그인/로그아웃, 토큰 관리 |
