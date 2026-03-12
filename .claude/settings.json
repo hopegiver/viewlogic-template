@@ -27,5 +27,19 @@
       "Bash(eval*)",
       "Bash(exec*)"
     ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/validate-files.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
   }
 }
