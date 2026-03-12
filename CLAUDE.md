@@ -31,12 +31,8 @@ project/
 
 ## 핵심 규칙
 
-1. **파일 쌍**: `views/{name}.html` ↔ `logic/{name}.js` 반드시 동일 이름
-2. **폴더 = 라우트**: `goals/my-goals.html` → `#/goals/my-goals`
-3. **CSS**: HTML에 `<style>` 태그 금지, 모든 CSS는 `css/base.css`
-4. **라우팅**: `this.navigateTo()` 사용, `window.location` 직접 조작 금지
-5. **비동기**: `async/await` 사용, `Promise.then/catch` 금지
-6. **레이아웃**: `layout: null` 사용, `layout: false` 금지
+`views/{name}.html` ↔ `logic/{name}.js` 파일 쌍 필수. 폴더 구조 = 라우트.
+상세 규칙은 `.claude/rules/` 참조 (CSS: `style-guide.md`, JS: `viewlogic-guide.md`).
 
 ## 상세 문서
 
@@ -59,13 +55,19 @@ project/
 
 ## 커맨드
 
-다음 커맨드를 사용하여 빠르게 작업할 수 있습니다:
-
 | 커맨드 | 설명 |
 |--------|------|
 | `/create-page` | 새 페이지 (view + logic) 생성 |
 | `/create-component` | 새 재사용 컴포넌트 생성 |
 | `/create-layout` | 새 레이아웃 생성 |
+| `/generate-crud` | CRUD 페이지 세트 (목록, 상세, 생성, 수정) 한 번에 생성 |
+| `/add-modal` | 기존 페이지에 Bootstrap 모달 다이얼로그 추가 |
+| `/add-search-filter` | 목록 페이지에 검색/필터 기능 추가 (클라이언트/서버) |
+| `/add-builtin-component` | 내장 컴포넌트 (DatePicker, Table 등) 추가 및 설정 |
+| `/add-dashboard-card` | 대시보드에 통계 카드/테이블/활동 로그 위젯 추가 |
+| `/setup-auth` | 인증 시스템 (로그인/로그아웃/보호 라우트) 설정 |
+| `/setup-i18n` | 다국어 지원 (i18n) 시스템 설정 |
+| `/validate-page` | 페이지가 ViewLogic 규칙을 준수하는지 검증 및 자동 수정 |
 
 ## 템플릿
 

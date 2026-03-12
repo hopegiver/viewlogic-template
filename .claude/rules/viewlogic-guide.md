@@ -33,14 +33,3 @@
 ## computed vs methods
 - computed: 캐싱되는 계산값 (자주 안 변하는 것)
 - methods: 매번 새로 계산하는 값
-
-## 참조 트리거
-- **페이지 생성 시**: `.claude/templates/page.md` 필수 참조 후 적절한 변형 선택
-- **컴포넌트 생성 시**: `.claude/templates/component.md` 필수 참조
-- **레이아웃 생성 시**: `.claude/templates/layout.md` 필수 참조
-- **내장 컴포넌트 사용 시**: `docs/components-builtin.md` 참조하여 Props/Events 확인
-- **dataURL 사용 시**: `docs/data-fetching.md` 참조
-- **에러 처리/로딩/밸리데이션 구현 시**: `docs/patterns.md` 참조하여 표준 패턴 적용
-
-## 상세 문서
-`docs/` 폴더에 기능별 상세 문서: routing, data-fetching, forms, api, auth, i18n, components, components-builtin, layout, patterns, advanced, configuration
