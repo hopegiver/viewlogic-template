@@ -232,6 +232,13 @@ reviewer 완료 후 `docs/specs/60-review-report.md`의 **"Re-run Verdict"** 섹
 - ✅ 출력 검증 수행
 - 🔍 spec-lint 실행 (agent: `finalizer`, target: `docs/specs/70-final-dev-spec.md`, glossary_path: `docs/specs/10-product-requirements.md`)
 
+### Step 8: dev-prompt
+- 입력: `docs/specs/70-final-dev-spec.md` (및 분할 파일 `71-*`, `72-*`, `73-*`), `docs/specs/40-api-spec.md`, `docs/specs/50-ui-ux-spec.md`, `docs/specs/30-db-schema.md`, `docs/specs/20-system-architecture.md`
+- 출력: `docs/specs/80-dev-prompt-frontend.md`, `docs/specs/81-dev-prompt-backend.md`
+- 에이전트: `dev-prompt`
+- ✅ 출력 검증 수행 (두 파일 모두 존재 및 10줄 이상 확인)
+- ⚠️ spec-lint는 실행하지 않음 (개발 프롬프트는 스펙 문서가 아닌 실행 가이드)
+
 ## 에이전트 재실행 규칙 (patch 모드)
 
 **모든 에이전트 재실행**은 아래 규칙을 따른다. 이 규칙은 spec-lint FAIL 재실행, API Gap Resolution 재실행, 리뷰 루프 재실행, 사용자 피드백 재실행 모두에 적용된다.
@@ -280,3 +287,4 @@ reviewer 완료 후 `docs/specs/60-review-report.md`의 **"Re-run Verdict"** 섹
 - 잔여 Critical 이슈 (있는 경우)
 - 주요 리뷰 이슈 (60-review-report.md 기반)
 - 최종 명세 핵심 요약 (70-final-dev-spec.md 기반)
+- 개발 프롬프트 생성 결과 (Step 8): 80-dev-prompt-frontend.md, 81-dev-prompt-backend.md 생성 여부
